@@ -1,0 +1,15 @@
+[
+  {
+    "id": "6b76d1fa-84d7-430b-964d-b30d12c4c08b",
+    "valor": 50.0,
+    "dataPagamento": "2025-06-17",
+    "metodo": "PIX",
+    "usuario": {
+      "nome": "Bruno Biblio",
+      "matricula": "222",
+      "tipo": "BIBLIOTECARIO",
+      "telefone": "99999-2222",
+      "email": "bruno@biblioteca.com"
+    }
+  }
+]

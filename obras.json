@@ -1,0 +1,34 @@
+[
+  {
+    "codigo": "L001",
+    "titulo": "Java Básico",
+    "autor": "João Silva",
+    "anoPublicacao": 2020,
+    "emprestado": false,
+    "tipo": "Livro"
+  },
+  {
+    "codigo": "R001",
+    "titulo": "Ciência Hoje",
+    "autor": "Ana Souza",
+    "anoPublicacao": 2023,
+    "emprestado": false,
+    "tipo": "Revista"
+  },
+  {
+    "codigo": "A001",
+    "titulo": "IA na Educação",
+    "autor": "Carlos Lima",
+    "anoPublicacao": 2022,
+    "emprestado": false,
+    "tipo": "Artigo"
+  },
+  {
+    "codigo": "L002",
+    "titulo": "Java Avançado",
+    "autor": "Machado de Assis",
+    "anoPublicacao": 2018,
+    "emprestado": false,
+    "tipo": "Livro"
+  }
+]
