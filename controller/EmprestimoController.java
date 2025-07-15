@@ -8,16 +8,26 @@ import model.Usuario;
 import java.time.LocalDate;
 import java.util.List;
 
+import controller.ObraController;
+
 public class EmprestimoController {
     private final EmprestimoDAO dao;
+    private final ObraController obraController;
     private List<Emprestimo> emprestimos;
 
     public EmprestimoController() {
         this.dao = new EmprestimoDAO();
         this.emprestimos = dao.carregar();
+        this.obraController = new ObraController();
     }
 
     public boolean realizarEmprestimo(Usuario usuario, Obra obra) {
+        for (Emprestimo emp : emprestimos) {
+            if (emp.getObra().getCodigo().equals(obra.getCodigo()) && emp.getDataDevolucao() == null) {
+                System.out.println("❌ Esta obra já está emprestada.");
+                return false;
+            }
+        }
         if (!obra.emprestar(LocalDate.now())) {
             System.out.println("❌ Obra já está emprestada.");
             return false;
@@ -27,16 +37,22 @@ public class EmprestimoController {
         emprestimos.add(novo);
         dao.salvar(emprestimos);
 
+        obraController.salvarLista();
+
         System.out.println("✅ Empréstimo realizado com sucesso!");
         return true;
     }
 
-    public boolean realizarDevolucao(Obra obra) {
+    public boolean realizarDevolucao(Obra obraInformada) {
         for (Emprestimo emp : emprestimos) {
-            if (emp.getObra().getCodigo().equals(obra.getCodigo()) && emp.getDataDevolucao() == null) {
-                boolean noPrazo = obra.devolver(LocalDate.now());
-                emp.devolver(LocalDate.now()); // registra a data na classe Emprestimo
+            if (emp.getObra().getCodigo().equals(obraInformada.getCodigo()) && emp.getDataDevolucao() == null) {
+                Obra obraReal = emp.getObra();
+
+                boolean noPrazo = obraReal.devolver(LocalDate.now());
+                emp.devolver(LocalDate.now());
+
                 dao.salvar(emprestimos);
+                obraController.salvarLista();
 
                 if (noPrazo) {
                     System.out.println("✅ Devolução no prazo.");
