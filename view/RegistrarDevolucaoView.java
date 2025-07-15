@@ -1,35 +1,36 @@
 package view;
 
 import controller.EmprestimoController;
+import model.Emprestimo;
 import model.Obra;
 
 import javax.swing.*;
 import java.awt.*;
-import controller.ObraController;
-
 
 public class RegistrarDevolucaoView extends JFrame {
-    private final JTextField campoCodigoObra;
+    private final JTextField campoCodigo;
     private final JLabel mensagem;
 
     public RegistrarDevolucaoView() {
         setTitle("📤 Registrar Devolução");
-        setSize(400, 200);
+        setSize(350, 200);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE); // Fecha só essa janela
         setLocationRelativeTo(null);
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setLayout(new BorderLayout());
 
-        JPanel painel = new JPanel(new GridLayout(2, 2, 10, 10));
-        painel.setBorder(BorderFactory.createEmptyBorder(20, 40, 10, 40));
+        // Painel principal
+        JPanel painel = new JPanel(new GridLayout(3, 1, 10, 10));
+        painel.setBorder(BorderFactory.createEmptyBorder(20, 40, 20, 40));
 
         painel.add(new JLabel("Código da obra:"));
-        campoCodigoObra = new JTextField();
-        painel.add(campoCodigoObra);
+        campoCodigo = new JTextField();
+        painel.add(campoCodigo);
 
         JButton botaoRegistrar = new JButton("Registrar");
         botaoRegistrar.addActionListener(e -> registrarDevolucao());
         painel.add(botaoRegistrar);
 
+        // Mensagem
         mensagem = new JLabel("", SwingConstants.CENTER);
         add(mensagem, BorderLayout.NORTH);
         add(painel, BorderLayout.CENTER);
@@ -38,32 +39,28 @@ public class RegistrarDevolucaoView extends JFrame {
     }
 
     private void registrarDevolucao() {
-        String codigo = campoCodigoObra.getText().trim();
+        String codigo = campoCodigo.getText().trim();
 
         if (codigo.isEmpty()) {
             mensagem.setText("⚠ Informe o código da obra.");
             return;
         }
 
-        ObraController obraController = new ObraController();
         EmprestimoController emprestimoController = new EmprestimoController();
+        Emprestimo emprestimo = emprestimoController.encontrarEmprestimoPorCodigoObra(codigo);
 
-        Obra obra = obraController.buscarPorCodigo(codigo);
-        if (obra == null) {
-            mensagem.setText("❌ Obra não encontrada.");
+        if (emprestimo == null) {
+            mensagem.setText("❌ Nenhum empréstimo ativo encontrado para esta obra.");
             return;
         }
 
-        if (obra.isDisponivel()) {
-            mensagem.setText("❌ Essa obra já está disponível.");
-            return;
-        }
-
+        Obra obra = emprestimo.getObra();
         boolean sucesso = emprestimoController.realizarDevolucao(obra);
+
         if (sucesso) {
-            mensagem.setText("✅ Devolução registrada com sucesso!");
+            mensagem.setText("✅ Devolução registrada com sucesso.");
         } else {
-            mensagem.setText("❌ Empréstimo não encontrado.");
+            mensagem.setText("❌ Não foi possível registrar a devolução.");
         }
     }
 }
