@@ -98,6 +98,10 @@ public class ObraController {
         dao.salvar(obras);
         return true;
     }
+    public void salvarLista() {
+        dao.salvar(obras); // Salva a lista atual de obras com os novos estados (emprestado ou não)
+    }
+
 
     // ✅ Método para fornecer a lista completa de obras (cópia)
     public List<Obra> getObras() {
