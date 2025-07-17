@@ -1,0 +1,23 @@
+[
+  {
+    "nome": "Maria Silva",
+    "matricula": "12345",
+    "tipo": "ALUNO",
+    "telefone": "83999999999",
+    "email": "maria@ifpb.edu.br"
+  },
+  {
+    "nome": "João Souza",
+    "matricula": "54321",
+    "tipo": "PROFESSOR",
+    "telefone": "83988888888",
+    "email": "joao@ifpb.edu.br"
+  },
+  {
+    "nome": "kaio Bezerra",
+    "matricula": "1010",
+    "tipo": "ALUNO",
+    "telefone": "981456917",
+    "email": "kaiob22@gmail.com"
+  }
+]
