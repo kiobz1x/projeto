@@ -8,17 +8,17 @@ import model.Usuario;
 import java.time.LocalDate;
 import java.util.List;
 
-import controller.ObraController;
-
 public class EmprestimoController {
     private final EmprestimoDAO dao;
     private final ObraController obraController;
+    private final MultaController multaController;  // objt MultaController do tipo multacontroller
     private List<Emprestimo> emprestimos;
 
     public EmprestimoController() {
         this.dao = new EmprestimoDAO();
         this.emprestimos = dao.carregar();
         this.obraController = new ObraController();
+        this.multaController = new MultaController();  // chama o multacontroller
     }
 
     public boolean realizarEmprestimo(Usuario usuario, Obra obra) {
@@ -57,7 +57,8 @@ public class EmprestimoController {
                 if (noPrazo) {
                     System.out.println("✅ Devolução no prazo.");
                 } else {
-                    System.out.println("⚠ A devolução ocorreu com atraso. Uma multa deve ser cobrada.");
+                    System.out.println("⚠ A devolução ocorreu com atraso. Uma multa será gerada.");
+                    multaController.gerarMultasAutomaticamente(List.of(emp));  // Gera multa para esse empréstimo atrasado
                 }
 
                 return true;
