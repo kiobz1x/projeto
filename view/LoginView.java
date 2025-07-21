@@ -10,30 +10,48 @@ public class LoginView extends JFrame {
     private final JTextField campoMatricula;
     private final JButton botaoEntrar;
     private final JLabel mensagem;
+    private JLabel lblLogin;
 
     public LoginView() {
+    	setResizable(false);
         setTitle("Login - Sistema da Biblioteca");
-        setSize(350, 200);
+        setSize(556, 276);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-        setLayout(new BorderLayout());
+        getContentPane().setLayout(new BorderLayout());
+      
 
         // Painel de entrada
-        JPanel painelCentro = new JPanel(new GridLayout(3, 1));
+        JPanel painelCentro = new JPanel();
+        painelCentro.setBounds(90,155,200,50);
         painelCentro.setBorder(BorderFactory.createEmptyBorder(20, 40, 20, 40));
-        painelCentro.add(new JLabel("Digite sua matrícula:"));
+        painelCentro.setLayout(null);
 
+        getContentPane().add(painelCentro, BorderLayout.CENTER);
+        
+        lblLogin = new JLabel("Login");
+        lblLogin.setFont(new Font("Arial", Font.PLAIN, 20));
+        lblLogin.setBounds(261, 41, 55, 34);
+        painelCentro.add(lblLogin);
+        
+        JLabel matricula = new JLabel("Digite a sua matricula:");
+        matricula.setFont(new Font("Verdana", Font.PLAIN, 14));
+        matricula.setBounds(64, 110, 190, 21);
+        painelCentro.add(matricula);
         campoMatricula = new JTextField();
+        campoMatricula.setFont(new Font("Verdana", Font.PLAIN, 14));
+        campoMatricula.setBounds(279, 104, 190, 34);
         painelCentro.add(campoMatricula);
-
+        campoMatricula.setColumns(10);
+        
         botaoEntrar = new JButton("Entrar");
+        botaoEntrar.setFont(new Font("Verdana", Font.PLAIN, 16));
+        botaoEntrar.setBounds(239, 171, 115, 20);
         painelCentro.add(botaoEntrar);
-
-        add(painelCentro, BorderLayout.CENTER);
 
         // Mensagem
         mensagem = new JLabel("", SwingConstants.CENTER);
-        add(mensagem, BorderLayout.SOUTH);
+        getContentPane().add(mensagem, BorderLayout.SOUTH);
 
         // Ação do botão
         botaoEntrar.addActionListener(e -> fazerLogin());
