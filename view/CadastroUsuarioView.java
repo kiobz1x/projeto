@@ -68,6 +68,19 @@ public class CadastroUsuarioView extends JFrame {
             mensagem.setText("⚠ Preencha todos os campos.");
             return;
         }
+        if (!telefone.matches("\\d+")) {
+            mensagem.setText("⚠ O telefone deve conter apenas números.");
+            return;
+        }
+        if (!email.matches("^[\\w\\.-]+@[\\w\\.-]+\\.\\w{2,}$")) {
+            mensagem.setText("⚠ E-mail inválido. Ex: exemplo@dominio.com");
+            return;
+        }
+        if (!nome.matches("^[A-Za-zÀ-ÿ ]+$")) {
+            mensagem.setText("⚠ O nome deve conter apenas letras.");
+            return;
+        }
+
 
         try {
             TipoUsuario tipo = TipoUsuario.valueOf(tipoStr);
