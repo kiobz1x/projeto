@@ -63,6 +63,17 @@ public class RegistrarPagamentoView extends JFrame {
             mensagem.setText("❌ Usuário não encontrado.");
             return;
         }
+        try {
+            double valor = Double.parseDouble(campoValor.getText().trim());
+            if (valor < 0) {
+                mensagem.setText("⚠ Valor negativo não é permitido.");
+                return;
+            }
+        } catch (NumberFormatException e) {
+            mensagem.setText("⚠ Valor inválido. Use apenas números.");
+            return;
+        }
+
 
         try {
             double valor = Double.parseDouble(valorTexto);
