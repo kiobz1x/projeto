@@ -10,6 +10,7 @@ public class MenuView extends JFrame {
     private final Usuario usuario;
 
     public MenuView(Usuario usuario) {
+        setResizable(false);
         this.usuario = usuario;
 
         setTitle("Menu - " + usuario.getTipo());
@@ -34,6 +35,10 @@ public class MenuView extends JFrame {
                 JButton botaoCadastrarUsuario = new JButton("Cadastrar Usuários");
                 botaoCadastrarUsuario.addActionListener(e -> new CadastroUsuarioView());
                 painelBotoes.add(botaoCadastrarUsuario);
+
+                JButton botaoCadastrarLeitor = new JButton("Cadastrar Leitores");
+                botaoCadastrarLeitor.addActionListener(e -> new CadastroLeitoresView());
+                painelBotoes.add(botaoCadastrarLeitor);
 
                 painelBotoes.add(new JButton("Ver Relatórios (em breve)"));
             }
