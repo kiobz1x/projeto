@@ -1,1 +1,44 @@
 [
+  {
+    "id": "e79b3b70-d768-4775-8f33-ba46a5d9655a",
+    "usuario": {
+      "nome": "kaio",
+      "matricula": "1010",
+      "tipo": "ADMINISTRADOR",
+      "telefone": "981456917",
+      "email": "kaiob2951@gmail.com"
+    },
+    "obra": {
+      "codigo": "101010",
+      "titulo": "seila",
+      "autor": "cosmic",
+      "anoPublicacao": 2025,
+      "emprestado": false,
+      "tipo": "Livro"
+    },
+    "dataEmprestimo": "2025-07-21",
+    "dataPrevistaDevolucao": "2025-07-28",
+    "dataDevolucao": "2025-07-21"
+  },
+  {
+    "id": "be8ecab0-7add-44e8-b8f9-fec10f377aba",
+    "usuario": {
+      "nome": "Cecilia",
+      "matricula": "12345",
+      "tipo": "BIBLIOTECARIO",
+      "telefone": "985411769",
+      "email": "ceciliaemanu@gmail.com"
+    },
+    "obra": {
+      "codigo": "10010",
+      "titulo": "perceptivel",
+      "autor": "emanuelle",
+      "anoPublicacao": 2020,
+      "emprestado": false,
+      "tipo": "Livro"
+    },
+    "dataEmprestimo": "2025-07-21",
+    "dataPrevistaDevolucao": "2025-07-28",
+    "dataDevolucao": "2025-07-21"
+  }
+]
