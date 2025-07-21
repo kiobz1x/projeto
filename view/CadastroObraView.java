@@ -69,6 +69,13 @@ public class CadastroObraView extends JFrame {
 
         try {
             int ano = Integer.parseInt(anoTexto);
+            int anoAtual = java.time.Year.now().getValue();
+
+            if (ano > anoAtual) {
+                mensagem.setText("⚠ O ano de publicação não pode ser maior que o ano atual.");
+                return;
+            }
+
             ObraController controller = new ObraController();
             boolean sucesso = controller.adicionarObra(codigo, titulo, autor, ano, tipo);
 
@@ -83,6 +90,7 @@ public class CadastroObraView extends JFrame {
             mensagem.setText("❌ Ano inválido. Use apenas números.");
         }
     }
+
 
     private void limparCampos() {
         campoCodigo.setText("");
