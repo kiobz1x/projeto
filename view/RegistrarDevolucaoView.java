@@ -47,7 +47,7 @@ public class RegistrarDevolucaoView extends JFrame {
         }
 
         EmprestimoController emprestimoController = new EmprestimoController();
-        Emprestimo emprestimo = emprestimoController.encontrarEmprestimoPorId(codigo);
+        Emprestimo emprestimo = emprestimoController.encontrarEmprestimoAtivoPorObra(codigo);
 
         if (emprestimo == null) {
             mensagem.setText("❌ Nenhum empréstimo ativo encontrado para esta obra.");
