@@ -47,15 +47,15 @@ public class RegistrarDevolucaoView extends JFrame {
         }
 
         EmprestimoController emprestimoController = new EmprestimoController();
-        Emprestimo emprestimo = emprestimoController.encontrarEmprestimoPorCodigoObra(codigo);
+        Emprestimo emprestimo = emprestimoController.encontrarEmprestimoPorId(codigo);
 
         if (emprestimo == null) {
             mensagem.setText("❌ Nenhum empréstimo ativo encontrado para esta obra.");
             return;
         }
 
-        Obra obra = emprestimo.getObra();
-        boolean sucesso = emprestimoController.realizarDevolucao(obra);
+        String codigoObra = emprestimo.getObra().getCodigo();
+        boolean sucesso = emprestimoController.realizarDevolucao(codigoObra);
 
         if (sucesso) {
             mensagem.setText("✅ Devolução registrada com sucesso.");
