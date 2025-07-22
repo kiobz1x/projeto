@@ -52,6 +52,12 @@ public abstract class Obra implements Emprestavel {
     public LocalDate getDataPrevistaDevolucao() {
         return dataPrevistaDevolucao;
     }
+    
+    @Override
+    public LocalDate getDataEmprestimo() {
+        return dataEmprestimo;
+    }
+
 
     // Getters e Setters
     public String getCodigo() { return codigo; }
@@ -61,6 +67,10 @@ public abstract class Obra implements Emprestavel {
     public boolean isEmprestado() { return emprestado; }
 
     public void setEmprestado(boolean emprestado) { this.emprestado = emprestado; }
+
+    public String getTipo() {
+        return getClass().getSimpleName(); // Retorna livro, artigo ou revista.
+    }
 
     @Override
     public String toString() {
