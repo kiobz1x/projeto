@@ -1,11 +1,10 @@
 package view;
 
 import controller.EmprestimoController;
-import controller.UsuarioController;
-import model.Obra;
-import model.Usuario;
+import controller.LeitorController;
 import controller.ObraController;
-
+import model.Leitor;
+import model.Obra;
 
 import javax.swing.*;
 import java.awt.*;
@@ -25,7 +24,7 @@ public class RegistrarEmprestimoView extends JFrame {
         JPanel painel = new JPanel(new GridLayout(3, 2, 10, 10));
         painel.setBorder(BorderFactory.createEmptyBorder(20, 40, 10, 40));
 
-        painel.add(new JLabel("Matrícula do usuário:"));
+        painel.add(new JLabel("Matrícula do leitor:"));
         campoMatricula = new JTextField();
         painel.add(campoMatricula);
 
@@ -53,13 +52,13 @@ public class RegistrarEmprestimoView extends JFrame {
             return;
         }
 
-        UsuarioController usuarioController = new UsuarioController();
+        LeitorController leitorController = new LeitorController();
         ObraController obraController = new ObraController();
         EmprestimoController emprestimoController = new EmprestimoController();
 
-        Usuario usuario = usuarioController.buscarPorMatricula(matricula);
-        if (usuario == null) {
-            mensagem.setText("❌ Usuário não encontrado.");
+        Leitor leitor = leitorController.buscarLeitorPorMatricula(matricula);
+        if (leitor == null) {
+            mensagem.setText("❌ Leitor não encontrado.");
             return;
         }
 
@@ -74,7 +73,8 @@ public class RegistrarEmprestimoView extends JFrame {
             return;
         }
 
-        boolean sucesso = emprestimoController.realizarEmprestimo(usuario, obra);
+        boolean sucesso = emprestimoController.realizarEmprestimo(leitor.getMatricula(), obra.getCodigo());
+
         if (sucesso) {
             mensagem.setText("✅ Empréstimo registrado com sucesso!");
             limparCampos();
