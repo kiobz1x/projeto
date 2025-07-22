@@ -1,6 +1,7 @@
 package dao;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import model.Multa;
 
@@ -13,7 +14,10 @@ import java.util.List;
 
 public class MultaDAO implements Persistivel<Multa> {
     private final String arquivo = "multas.json";
-    private final Gson gson = new Gson();
+    private final Gson gson = new GsonBuilder()
+    	    .registerTypeAdapter(java.time.LocalDate.class, new LocalDateAdapter())
+    	    .setPrettyPrinting()
+    	    .create();
 
     @Override
     public List<Multa> carregar() {
