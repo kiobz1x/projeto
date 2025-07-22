@@ -4,17 +4,17 @@ import java.time.LocalDate;
 
 public class Multa {
     private String idEmprestimo;    // ID do empréstimo atrasado
-    private String nomeUsuario;     // Nome do usuário para facilitar exibição
+    private String nomeLeitor;     // Nome do leitor para facilitar exibição
     private String tituloObra;      // Título da obra para exibição
     private LocalDate dataDevolucao;
     private int diasAtraso;
     private double valor;
     private boolean paga;
 
-    public Multa(String idEmprestimo, String nomeUsuario, String tituloObra,
+    public Multa(String idEmprestimo, String nomeLeitor, String tituloObra,
                  LocalDate dataDevolucao, int diasAtraso, double valor) {
         this.idEmprestimo = idEmprestimo;
-        this.nomeUsuario = nomeUsuario;
+        this.nomeLeitor = nomeLeitor;
         this.tituloObra = tituloObra;
         this.dataDevolucao = dataDevolucao;
         this.diasAtraso = diasAtraso;
@@ -26,8 +26,8 @@ public class Multa {
         return idEmprestimo;
     }
 
-    public String getNomeUsuario() {
-        return nomeUsuario;
+    public String getNomeLeitor() {
+        return nomeLeitor;
     }
 
     public String getTituloObra() {
@@ -57,7 +57,7 @@ public class Multa {
     @Override
     public String toString() {
         return "Multa [Empréstimo ID: " + idEmprestimo + 
-               ", Usuário: " + nomeUsuario + 
+               ", Usuário: " + nomeLeitor + 
                ", Obra: " + tituloObra + 
                ", Devolução: " + dataDevolucao + 
                ", Dias atraso: " + diasAtraso + 
