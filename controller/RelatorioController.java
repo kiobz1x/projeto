@@ -1,24 +1,28 @@
 package controller;
 
+import java.io.FileOutputStream;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 import com.itextpdf.text.Document;
 import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
-import dao.EmprestimoDAO;
-import model.Emprestimo;
 
-import java.io.FileOutputStream;
-import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Comparator;
+import dao.EmprestimoDAO;
+import dao.LeitorDAO;
+import model.Emprestimo;
+import model.Leitor;
 
 public class RelatorioController {
     private final EmprestimoDAO dao = new EmprestimoDAO();
+    private final LeitorDAO leitorDAO = new LeitorDAO();
 
     // 📄 Relatório de empréstimos do mês atual
     public void gerarRelatorioEmprestimosDoMes() {
@@ -26,10 +30,7 @@ public class RelatorioController {
         int mesAtual = LocalDate.now().getMonthValue();
         int anoAtual = LocalDate.now().getYear();
 
-        List<Emprestimo> filtrados = todos.stream()
-                .filter(e -> e.getDataEmprestimo().getMonthValue() == mesAtual &&
-                        e.getDataEmprestimo().getYear() == anoAtual)
-                .collect(Collectors.toList());
+        List<Emprestimo> filtrados = todos.stream().filter(e -> e.getDataEmprestimo().getMonthValue() == mesAtual && e.getDataEmprestimo().getYear() == anoAtual).collect(Collectors.toList());
 
         if (filtrados.isEmpty()) {
             System.out.println("📭 Nenhum empréstimo registrado este mês.");
@@ -54,7 +55,10 @@ public class RelatorioController {
             tabela.addCell("Prev. Devolução");
 
             for (Emprestimo emp : filtrados) {
-                tabela.addCell(emp.getUsuario().getNome());
+                Leitor leitor = leitorDAO.buscarPorMatricula(emp.getLeitorId());
+                String nomeLeitor = (leitor != null) ? leitor.getNome() : "Desconhecido";
+
+                tabela.addCell(nomeLeitor);
                 tabela.addCell(emp.getObra().getTitulo());
                 tabela.addCell(emp.getDataEmprestimo().toString());
                 tabela.addCell(emp.getDataPrevistaDevolucao().toString());
@@ -127,8 +131,9 @@ public class RelatorioController {
 
         for (Emprestimo e : emprestimos) {
             if (e.getDataDevolucao() != null && e.isAtrasado()) {
-                String nome = e.getUsuario().getNome();
-                contagemAtrasos.put(nome, contagemAtrasos.getOrDefault(nome, 0) + 1);
+            	Leitor leitor = leitorDAO.buscarPorMatricula(e.getLeitorId());
+            	String nome = (leitor != null) ? leitor.getNome() : "Desconhecido";
+            	contagemAtrasos.put(nome, contagemAtrasos.getOrDefault(nome, 0) + 1);
             }
         }
 
