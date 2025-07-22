@@ -2,11 +2,7 @@ package dao;
 
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
-import model.Emprestimo;
-import model.Obra;
-import model.Livro;
-import model.Revista;
-import model.Artigo;
+import model.*;
 
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -21,12 +17,11 @@ public class EmprestimoDAO implements Persistivel<Emprestimo> {
     private final Gson gson;
 
     public EmprestimoDAO() {
-        // Configura o RuntimeTypeAdapterFactory para a classe abstrata Obra
         RuntimeTypeAdapterFactory<Obra> obraAdapterFactory = RuntimeTypeAdapterFactory
             .of(Obra.class, "tipo")
-            .registerSubtype(Livro.class, "Livro")
-            .registerSubtype(Revista.class, "Revista")
-            .registerSubtype(Artigo.class, "Artigo");
+            .registerSubtype(Livro.class, "livro")
+            .registerSubtype(Revista.class, "revista")
+            .registerSubtype(Artigo.class, "artigo");
 
         this.gson = new GsonBuilder()
             .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
@@ -42,7 +37,7 @@ public class EmprestimoDAO implements Persistivel<Emprestimo> {
             List<Emprestimo> lista = gson.fromJson(reader, tipoLista);
             return (lista != null) ? lista : new ArrayList<>();
         } catch (IOException | JsonSyntaxException e) {
-            System.out.println("Arquivo não encontrado ou inválido. Iniciando lista vazia.");
+            System.out.println("Arquivo de empréstimos não encontrado ou inválido. Criando lista vazia.");
             return new ArrayList<>();
         }
     }
@@ -54,5 +49,23 @@ public class EmprestimoDAO implements Persistivel<Emprestimo> {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    // mesmo sistema, mas busca por id Buscar empréstimo por ID
+    public Emprestimo buscarPorId(String id) {
+        List<Emprestimo> emprestimos = carregar();
+        for (Emprestimo e : emprestimos) {
+            if (e.getId().equalsIgnoreCase(id)) {
+                return e;
+            }
+        }
+        return null;
+    }
+
+    //  Sistema para remover o empréstimo por ID (facilita o trabalho e não fica tudo em uma classe/json só)
+    public void removerPorId(String id) {
+        List<Emprestimo> emprestimos = carregar();
+        emprestimos.removeIf(e -> e.getId().equalsIgnoreCase(id));
+        salvar(emprestimos);
     }
 }
