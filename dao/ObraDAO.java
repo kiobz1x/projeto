@@ -52,4 +52,14 @@ public class ObraDAO implements Persistivel<Obra> {
             e.printStackTrace();
         }
     }
+    
+    public Obra buscarPorCodigo(String codigo) {
+        List<Obra> obras = carregar();
+        for (Obra o : obras) {
+            if (o.getCodigo().equalsIgnoreCase(codigo)) {
+                return o;
+            }
+        }
+        return null;
+    }
 }
