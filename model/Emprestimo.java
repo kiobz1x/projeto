@@ -1,65 +1,62 @@
 package model;
 
 import java.time.LocalDate;
-import java.util.UUID;
+import java.time.format.DateTimeFormatter;
 
 public class Emprestimo {
-    private String id; // esse ID é PAra ajudar a associar as multas
-    private Usuario usuario;
+    private String id;
+    private String leitorId; // <<< Corrigido aqui
     private Obra obra;
     private LocalDate dataEmprestimo;
     private LocalDate dataPrevistaDevolucao;
-    private LocalDate dataDevolucao; // null se não devolvido
+    private LocalDate dataDevolucao;
 
-    public Emprestimo(Usuario usuario, Obra obra, LocalDate dataEmprestimo) {
-        this.id = UUID.randomUUID().toString(); // aqui ta criando o ID
-        this.usuario = usuario;
+    public Emprestimo(String leitorId, Obra obra) {
+        this.id = gerarId();
+        this.leitorId = leitorId;
         this.obra = obra;
-        this.dataEmprestimo = dataEmprestimo;
+        this.dataEmprestimo = LocalDate.now();
         this.dataPrevistaDevolucao = dataEmprestimo.plusDays(obra.getTempoEmprestimo());
-        this.dataDevolucao = null;
-        obra.setEmprestado(true); //obra emprestada
     }
 
-    public String getId() {
-        return id;
+    private String gerarId() {
+        int numero = (int)(Math.random() * 900 + 100);
+        return "E" + numero;
     }
 
-    public boolean devolver(LocalDate dataDevolucao) {
+    // Getters
+    public String getId() { return id; }
+    public String getLeitorId() { return leitorId; } // <<< Corrigido aqui
+    public Obra getObra() { return obra; }
+    public LocalDate getDataEmprestimo() { return dataEmprestimo; }
+    public LocalDate getDataPrevistaDevolucao() { return dataPrevistaDevolucao; }
+    public LocalDate getDataDevolucao() { return dataDevolucao; }
+
+    // Setters
+    public void setDataDevolucao(LocalDate dataDevolucao) {
         this.dataDevolucao = dataDevolucao;
-        obra.setEmprestado(false);
-        return !isAtrasado();
     }
 
+    // Outros métodos
     public boolean isAtrasado() {
         return dataDevolucao != null && dataDevolucao.isAfter(dataPrevistaDevolucao);
     }
 
-    public Usuario getUsuario() {
-        return usuario;
+    public String getDataEmprestimoFormatada() {
+        return dataEmprestimo.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
     }
 
-    public Obra getObra() {
-        return obra;
+    public String getDataPrevistaDevolucaoFormatada() {
+        return dataPrevistaDevolucao.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
     }
 
-    public LocalDate getDataEmprestimo() {
-        return dataEmprestimo;
-    }
-
-    public LocalDate getDataPrevistaDevolucao() {
-        return dataPrevistaDevolucao;
-    }
-
-    public LocalDate getDataDevolucao() {
-        return dataDevolucao;
+    public String getDataDevolucaoFormatada() {
+        return (dataDevolucao == null) ? "-" : dataDevolucao.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
     }
 
     @Override
     public String toString() {
-        return "Empréstimo de: " + obra.getTitulo() +
-                " para " + usuario.getNome() +
-                " em " + dataEmprestimo +
-                " (Devolução prevista: " + dataPrevistaDevolucao + ")";
+        return String.format("ID: %s | Obra: %s | Leitor: %s | Empréstimo: %s | Previsto: %s | Devolvido: %s",
+            id, obra.getCodigo(), leitorId, getDataEmprestimoFormatada(), getDataPrevistaDevolucaoFormatada(), getDataDevolucaoFormatada());
     }
 }
