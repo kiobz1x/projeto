@@ -1,0 +1,11 @@
+[
+  {
+    "idEmprestimo": "E101",
+    "nomeLeitor": "Maria Silva",
+    "tituloObra": "Desconhecido",
+    "dataDevolucao": "2025-07-18",
+    "diasAtraso": 3,
+    "valor": 7.5,
+    "paga": true
+  }
+]
