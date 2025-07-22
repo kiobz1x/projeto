@@ -30,5 +30,13 @@
     "anoPublicacao": 2018,
     "emprestado": false,
     "tipo": "Livro"
+  },
+  {
+    "codigo": "K101",
+    "titulo": "As 5 linguagens do amor",
+    "autor": "Friedrich Nietzsche",
+    "anoPublicacao": 2018,
+    "emprestado": false,
+    "tipo": "Livro"
   }
 ]
