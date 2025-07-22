@@ -3,7 +3,6 @@ package view;
 import controller.LeitorController;
 import model.Leitor;
 import model.TipoLeitor;
-import dao.LeitorDAO;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,87 +17,115 @@ public class CadastroLeitoresView extends JFrame {
 	
 
 	public CadastroLeitoresView() {
-		setTitle("Cadastro de Leitores");
-		setSize(1400, 900);
+    	setResizable(false);
+        setTitle("👤 Cadastro de Leitores");
+        setSize(797, 532);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new BorderLayout());
-        
+
         JPanel painelLeitor = new JPanel();
         painelLeitor.setBounds(90,155,765,689);
         painelLeitor.setBorder(BorderFactory.createEmptyBorder(20, 40, 10, 40));
         painelLeitor.setLayout(null);
         
-        JLabel nome = new JLabel("Nome: ");
-        nome.setBounds(508, 151, 73, 48);
+        JLabel r = new JLabel("Cadastro de Leitores");
+        r.setFont(new Font("Arial", Font.PLAIN, 20));
+        r.setBounds(285, 50, 212, 24);
+        painelLeitor.add(r);
+        
+        JLabel nome = new JLabel("Nome:");
+        nome.setFont(new Font("Verdana", Font.PLAIN, 14));
+        nome.setBounds(154, 122, 73, 48);
         painelLeitor.add(nome);
         campoNome = new JTextField();
-        campoNome.setBounds(584, 201, 413, 33);
+        campoNome.setFont(new Font("Verdana", Font.PLAIN, 14));
+        campoNome.setBounds(264, 130, 413, 33);
         painelLeitor.add(campoNome);
+        campoNome.setColumns(10);
         
-        JLabel matricula = new JLabel("Matricula");
-        matricula.setBounds(508, 201, 62, 48);
+        JLabel matricula = new JLabel("Matrícula:");
+        matricula.setFont(new Font("Verdana", Font.PLAIN, 14));
+        matricula.setBounds(154, 176, 76, 31);
         painelLeitor.add(matricula);
         campoMatricula = new JTextField();
-        campoMatricula.setBounds(584, 151, 413, 33);
+        campoMatricula.setFont(new Font("Verdana", Font.PLAIN, 14));
+        campoMatricula.setColumns(10);
+        campoMatricula.setBounds(264, 173, 212, 33);
         painelLeitor.add(campoMatricula);
         
-        JLabel telefone = new JLabel("Telefone");
-        telefone.setBounds(508, 248, 73, 48);
-        painelLeitor.add(telefone);
+        JLabel telefone = new JLabel("Telefone:");
+        telefone.setFont(new Font("Verdana", Font.PLAIN, 14));
+        telefone.setBounds(154, 227, 76, 31);
+        painelLeitor.add(telefone);        
         campoTelefone = new JTextField();
-        campoTelefone.setBounds(584, 248, 165, 33);
+        campoTelefone.setFont(new Font("Verdana", Font.PLAIN, 14));
+        campoTelefone.setColumns(10);
+        campoTelefone.setBounds(264, 228, 413, 28);
         painelLeitor.add(campoTelefone);
         
-        JLabel email = new JLabel("E-mail");
-        email.setBounds(508, 291, 73, 48);
-        painelLeitor.add(email);
+        JLabel email = new JLabel("E-mail:");
+        email.setFont(new Font("Verdana", Font.PLAIN, 14));
+        email.setBounds(154, 268, 76, 31);
+        painelLeitor.add(email);        
         campoEmail = new JTextField();
-        campoEmail.setBounds(584, 299, 413, 33);
+        campoEmail.setFont(new Font("Verdana", Font.PLAIN, 14));
+        campoEmail.setColumns(10);
+        campoEmail.setBounds(264, 269, 413, 28);
         painelLeitor.add(campoEmail);
         
-        JLabel cadastroLeitor = new JLabel("Cadastro de Leitores");
-        cadastroLeitor.setBounds(570, 67, 245, 48);
-        cadastroLeitor.setFont(new Font("Arial", Font.BOLD, 25));
-        painelLeitor.add(cadastroLeitor);
-        
-        JButton cadastrarLeitor = new JButton("Cadastrar");
-        cadastrarLeitor.setBounds(561, 385, 271, 33);
-        cadastrarLeitor.setFont(new Font("Arial", Font.BOLD, 25));
-        painelLeitor.add(cadastrarLeitor);
-        
-        JLabel tipo = new JLabel("Tipo leitor");
-        tipo.setBounds(759, 255, 73, 19);
-        painelLeitor.add(tipo);
-        comboTipoLeitor = new JComboBox<>(new String[] {" ","Aluno", "Professor", "Servidor"});
-        comboTipoLeitor.setBounds(838, 248, 158, 33);
+        JLabel tipo = new JLabel("Tipo de usuário:");
+        tipo.setFont(new Font("Verdana", Font.PLAIN, 14));
+        tipo.setBounds(106, 312, 124, 31);
+        painelLeitor.add(tipo);        
+        comboTipoLeitor = new JComboBox<>(new String[] {" ","ALUNO", "PROFESSOR", "SERVIDOR"});
+        comboTipoLeitor.setBounds(264, 314, 212, 31);
         painelLeitor.add(comboTipoLeitor);
         
         mensagem = new JLabel("", SwingConstants.CENTER);
-        
-        getContentPane().add(mensagem, BorderLayout.NORTH);
+
         getContentPane().add(painelLeitor, BorderLayout.CENTER);
+        
+        JButton botaoCadastrar = new JButton("Cadastrar");
+        botaoCadastrar.setFont(new Font("Verdana", Font.PLAIN, 16));
+        botaoCadastrar.setBounds(260, 390, 263, 21);
+        painelLeitor.add(botaoCadastrar);
+        botaoCadastrar.addActionListener(e -> CadastroLeitoresView());
         getContentPane().add(mensagem, BorderLayout.NORTH);
 
         setVisible(true);
-        
-	}
-	
-	private void cadastrarLeitor() {
-		String nome = campoNome.getText().trim();
-		String matricula = campoMatricula.getText().trim();
-		String telefone = campoTelefone.getText().trim();
-		String email = campoEmail.getText().trim();
-		String tipoLeitor = (String) comboTipoLeitor.getSelectedItem();
-		
-		if (nome.isEmpty() || matricula.isEmpty() || telefone.isEmpty() || email.isEmpty()) {
+    }
+
+    private void CadastroLeitoresView() {
+        String nome = campoNome.getText().trim();
+        String matricula = campoMatricula.getText().trim();
+        String telefone = campoTelefone.getText().trim();
+        String email = campoEmail.getText().trim();
+        String tipoStr = (String) comboTipoLeitor.getSelectedItem();
+
+        if (nome.isEmpty() || matricula.isEmpty() || telefone.isEmpty() || email.isEmpty()) {
             mensagem.setText("⚠ Preencha todos os campos.");
             return;
         }
-		
-		try {
-            TipoLeitor tipo = TipoLeitor.valueOf(tipoLeitor);
-            Leitor leitor = new Leitor(nome, matricula, tipo, telefone, email);
+        
+        if (!telefone.matches("\\d+")) {
+            mensagem.setText("⚠ O telefone deve conter apenas números.");
+            return;
+        }
+
+        if (!email.matches("^[\\w\\.-]+@[\\w\\.-]+\\.\\w{2,}$")) {
+            mensagem.setText("⚠ E-mail inválido. Ex: exemplo@dominio.com");
+            return;
+        }
+        
+        if (!nome.matches("^[A-Za-zÀ-ÿ ]+$")) {
+            mensagem.setText("⚠ O nome deve conter apenas letras.");
+            return;
+        }
+
+        try {
+        	TipoLeitor tipo = TipoLeitor.valueOf(tipoStr);
+        	Leitor leitor = new Leitor(nome, matricula, tipo, telefone, email);
             LeitorController controller = new LeitorController();
 
             boolean sucesso = controller.cadastrarLeitor(leitor);
@@ -107,19 +134,18 @@ public class CadastroLeitoresView extends JFrame {
                 mensagem.setText("✅ Leitor cadastrado com sucesso!");
                 limparCampos();
             } else {
-                mensagem.setText("❌ Leitor já cadastrado.");
+                mensagem.setText("❌ Leitor já cadastrada.");
             }
         } catch (IllegalArgumentException e) {
             mensagem.setText("❌ Tipo de leitor inválido.");
         }
-	}
-	
-	private void limparCampos() {
+    }
+
+    private void limparCampos() {
         campoNome.setText("");
         campoMatricula.setText("");
         campoTelefone.setText("");
         campoEmail.setText("");
         comboTipoLeitor.setSelectedIndex(0);
-        
     }
 }
