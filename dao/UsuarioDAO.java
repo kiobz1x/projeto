@@ -34,5 +34,15 @@ public class UsuarioDAO implements Persistivel<Usuario> {
             e.printStackTrace();
         }
     }
+    
+    public Usuario buscarPorMatricula(String matricula) {
+        List<Usuario> usuarios = carregar();
+        for (Usuario u : usuarios) {
+            if (u.getMatricula().equalsIgnoreCase(matricula)) {
+                return u;
+            }
+        }
+        return null;
+    }
 }
 
