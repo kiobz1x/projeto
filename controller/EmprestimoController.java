@@ -95,6 +95,15 @@ public class EmprestimoController {
         }
         return null;
     }
+    public Emprestimo encontrarEmprestimoAtivoPorObra(String codigoObra) {
+        for (Emprestimo emp : emprestimos) {
+            if (emp.getObra().getCodigo().equalsIgnoreCase(codigoObra)
+                    && emp.getDataDevolucao() == null) {
+                return emp;
+            }
+        }
+        return null;
+    }
 
     public Leitor getLeitorDoEmprestimo(Emprestimo e) {
         return leitorDAO.buscarPorMatricula(e.getLeitorId());
