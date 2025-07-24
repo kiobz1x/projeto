@@ -1,6 +1,7 @@
 package controller;
 
 import dao.PagamentoDAO;
+import model.Leitor;
 import model.MetodoPagamento;
 import model.PagamentoMulta;
 import model.Usuario;
@@ -17,9 +18,9 @@ public class PagamentoController {
         this.pagamentos = dao.carregar();
     }
 
-    public void registrarPagamento(Usuario usuario, double valor, MetodoPagamento metodo) {
+    public void registrarPagamento(Leitor leitor, double valor, MetodoPagamento metodo) { //antes tava (Usuario usuario, double valor, MetodoPagamento metodo)
         String id = UUID.randomUUID().toString();
-        PagamentoMulta pagamento = new PagamentoMulta(id, valor, LocalDate.now(), metodo, usuario);
+        PagamentoMulta pagamento = new PagamentoMulta(id, valor, LocalDate.now(), metodo, leitor);
         pagamentos.add(pagamento);
         dao.salvar(pagamentos);
 
