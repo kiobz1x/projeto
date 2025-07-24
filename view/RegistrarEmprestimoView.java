@@ -15,30 +15,38 @@ public class RegistrarEmprestimoView extends JFrame {
     private final JLabel mensagem;
 
     public RegistrarEmprestimoView() {
+    	setResizable(false);
         setTitle("📥 Registrar Empréstimo");
         setSize(400, 250);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        setLayout(new BorderLayout());
+        getContentPane().setLayout(new BorderLayout());
 
         JPanel painel = new JPanel(new GridLayout(3, 2, 10, 10));
         painel.setBorder(BorderFactory.createEmptyBorder(20, 40, 10, 40));
 
-        painel.add(new JLabel("Matrícula do leitor:"));
+        JLabel label_1 = new JLabel("Matrícula do leitor:");
+        label_1.setFont(new Font("Verdana", Font.PLAIN, 14));
+        painel.add(label_1);
         campoMatricula = new JTextField();
+        campoMatricula.setFont(new Font("Verdana", Font.PLAIN, 14));
         painel.add(campoMatricula);
 
-        painel.add(new JLabel("Código da obra:"));
+        JLabel label = new JLabel("Código da obra:");
+        label.setFont(new Font("Verdana", Font.PLAIN, 14));
+        painel.add(label);
         campoCodigoObra = new JTextField();
+        campoCodigoObra.setFont(new Font("Verdana", Font.PLAIN, 14));
         painel.add(campoCodigoObra);
 
         JButton botaoRegistrar = new JButton("Registrar");
+        botaoRegistrar.setFont(new Font("Verdana", Font.PLAIN, 16));
         botaoRegistrar.addActionListener(e -> registrarEmprestimo());
         painel.add(botaoRegistrar);
 
         mensagem = new JLabel("", SwingConstants.CENTER);
-        add(mensagem, BorderLayout.NORTH);
-        add(painel, BorderLayout.CENTER);
+        getContentPane().add(mensagem, BorderLayout.NORTH);
+        getContentPane().add(painel, BorderLayout.CENTER);
 
         setVisible(true);
     }
