@@ -2,6 +2,10 @@ package view;
 
 import controller.PagamentoController;
 import controller.UsuarioController;
+import controller.LeitorController;
+import controller.MultaController;
+import model.Multa;
+import model.Leitor;
 import model.MetodoPagamento;
 import model.Usuario;
 
@@ -15,51 +19,65 @@ public class RegistrarPagamentoView extends JFrame {
     private final JLabel mensagem;
 
     public RegistrarPagamentoView() {
+    	setResizable(false);
         setTitle("💳 Registrar Pagamento de Multa");
-        setSize(400, 300);
+        setSize(601, 300);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        setLayout(new BorderLayout());
+        getContentPane().setLayout(new BorderLayout());
 
         JPanel painel = new JPanel(new GridLayout(4, 2, 10, 10));
         painel.setBorder(BorderFactory.createEmptyBorder(20, 40, 10, 40));
 
-        painel.add(new JLabel("Matrícula do usuário:"));
+        JLabel label_2 = new JLabel("Matrícula do usuário:");
+        label_2.setFont(new Font("Verdana", Font.PLAIN, 14));
+        painel.add(label_2);
         campoMatricula = new JTextField();
+        campoMatricula.setFont(new Font("Verdana", Font.PLAIN, 14));
         painel.add(campoMatricula);
 
-        painel.add(new JLabel("Valor da multa (R$):"));
+        JLabel label_1 = new JLabel("Valor da multa (R$):");
+        label_1.setFont(new Font("Verdana", Font.PLAIN, 14));
+        painel.add(label_1);
         campoValor = new JTextField();
+        campoValor.setFont(new Font("Verdana", Font.PLAIN, 14));
         painel.add(campoValor);
 
-        painel.add(new JLabel("Método de pagamento:"));
-        comboMetodo = new JComboBox<>(new String[]{"DINHEIRO", "PIX", "CARTAO"});
+        JLabel label = new JLabel("Método de pagamento:");
+        label.setFont(new Font("Verdana", Font.PLAIN, 14));
+        painel.add(label);
+        comboMetodo = new JComboBox<>(new String[]{" ", "DINHEIRO", "PIX", "CARTAO"});
+        comboMetodo.setFont(new Font("Verdana", Font.PLAIN, 14));
         painel.add(comboMetodo);
 
         JButton botaoRegistrar = new JButton("Registrar Pagamento");
+        botaoRegistrar.setFont(new Font("Verdana", Font.PLAIN, 16));
         botaoRegistrar.addActionListener(e -> registrarPagamento());
         painel.add(botaoRegistrar);
 
         mensagem = new JLabel("", SwingConstants.CENTER);
-        add(mensagem, BorderLayout.NORTH);
-        add(painel, BorderLayout.CENTER);
+        getContentPane().add(mensagem, BorderLayout.NORTH);
+        getContentPane().add(painel, BorderLayout.CENTER);
 
         setVisible(true);
     }
 
     private void registrarPagamento() {
-        String matricula = campoMatricula.getText().trim();
+        String matriculaLeitor = campoMatricula.getText().trim();
         String valorTexto = campoValor.getText().trim();
         String metodoStr = (String) comboMetodo.getSelectedItem();
 
-        if (matricula.isEmpty() || valorTexto.isEmpty()) {
+        if (matriculaLeitor.isEmpty() || valorTexto.isEmpty()) {
             mensagem.setText("⚠ Preencha todos os campos.");
             return;
         }
 
-        UsuarioController usuarioController = new UsuarioController();
-        Usuario usuario = usuarioController.buscarPorMatricula(matricula);
-        if (usuario == null) {
+//        UsuarioController usuarioController = new UsuarioController();
+//        Usuario usuario = usuarioController.buscarPorMatricula(matricula);
+        
+        LeitorController leitorController = new LeitorController();
+        Leitor leitor = leitorController.buscarLeitorPorMatricula(matriculaLeitor);
+        if (leitor == null) {
             mensagem.setText("❌ Usuário não encontrado.");
             return;
         }
@@ -80,7 +98,7 @@ public class RegistrarPagamentoView extends JFrame {
             MetodoPagamento metodo = MetodoPagamento.valueOf(metodoStr);
 
             PagamentoController pagamentoController = new PagamentoController();
-            pagamentoController.registrarPagamento(usuario, valor, metodo);
+            pagamentoController.registrarPagamento(leitor, valor, metodo);
             mensagem.setText("✅ Pagamento registrado com sucesso!");
             limparCampos();
         } catch (NumberFormatException e) {
