@@ -21,9 +21,9 @@ public class ObraDAO implements Persistivel<Obra> {
         // Adapter para permitir serialização/deserialização correta de classes filhas
         RuntimeTypeAdapterFactory<Obra> adapter = RuntimeTypeAdapterFactory
                 .of(Obra.class, "tipo")
-                .registerSubtype(Livro.class, "Livro")
-                .registerSubtype(Revista.class, "Revista")
-                .registerSubtype(Artigo.class, "Artigo");
+                .registerSubtype(Livro.class, "livro") 
+                .registerSubtype(Revista.class, "revista")
+                .registerSubtype(Artigo.class, "artigo");
 
         // GsonBuilder com suporte para LocalDate e o adapter para tipos
         gson = new GsonBuilder()
