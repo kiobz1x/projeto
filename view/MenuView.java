@@ -40,7 +40,6 @@ public class MenuView extends JFrame {
                 botaoCadastrarLeitor.addActionListener(e -> new CadastroLeitoresView());
                 painelBotoes.add(botaoCadastrarLeitor);
 
-                painelBotoes.add(new JButton("Ver Relatórios (em breve)"));
             }
 
             case BIBLIOTECARIO -> {
