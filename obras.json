@@ -5,7 +5,7 @@
     "autor": "João Silva",
     "anoPublicacao": 2020,
     "emprestado": false,
-    "tipo": "Livro"
+    "tipo": "livro"
   },
   {
     "codigo": "R001",
@@ -13,7 +13,7 @@
     "autor": "Ana Souza",
     "anoPublicacao": 2023,
     "emprestado": false,
-    "tipo": "Revista"
+    "tipo": "revista"
   },
   {
     "codigo": "A001",
@@ -21,7 +21,7 @@
     "autor": "Carlos Lima",
     "anoPublicacao": 2022,
     "emprestado": false,
-    "tipo": "Artigo"
+    "tipo": "artigo"
   },
   {
     "codigo": "L002",
@@ -29,7 +29,7 @@
     "autor": "Machado de Assis",
     "anoPublicacao": 2018,
     "emprestado": false,
-    "tipo": "Livro"
+    "tipo": "livro"
   },
   {
     "codigo": "K101",
@@ -37,6 +37,6 @@
     "autor": "Friedrich Nietzsche",
     "anoPublicacao": 2018,
     "emprestado": false,
-    "tipo": "Livro"
+    "tipo": "livro"
   }
 ]
