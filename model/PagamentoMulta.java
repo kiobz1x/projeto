@@ -7,14 +7,14 @@ public class PagamentoMulta {
     private double valor;
     private LocalDate dataPagamento;
     private MetodoPagamento metodo;
-    private Usuario usuario;
+    private Leitor leitor;
 
-    public PagamentoMulta(String id, double valor, LocalDate dataPagamento, MetodoPagamento metodo, Usuario usuario) {
+    public PagamentoMulta(String id, double valor, LocalDate dataPagamento, MetodoPagamento metodo, Leitor leitor) { //antes tava (String id, double valor, LocalDate dataPagamento, MetodoPagamento metodo, Usuario usuario)
         this.id = id;
         this.valor = valor;
         this.dataPagamento = dataPagamento;
         this.metodo = metodo;
-        this.usuario = usuario;
+        this.leitor = leitor;
     }
 
     public String getId() {
@@ -33,8 +33,8 @@ public class PagamentoMulta {
         return metodo;
     }
 
-    public Usuario getUsuario() {
-        return usuario;
+    public Leitor getLeitor() {
+        return leitor;
     }
 
     @Override
@@ -43,6 +43,6 @@ public class PagamentoMulta {
                 ", Valor: R$" + valor +
                 ", Data: " + dataPagamento +
                 ", Método: " + metodo +
-                ", Usuário: " + usuario.getNome();
+                ", Usuário: " + leitor.getNome();
     }
 }
