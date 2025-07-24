@@ -101,7 +101,7 @@ public class MultaController {
     }
 
     // ✅ Novo método com registro completo
-    public boolean pagarMultaComRegistro(String idEmprestimo, MetodoPagamento metodo, Usuario usuario) {
+    public boolean pagarMultaComRegistro(String idEmprestimo, MetodoPagamento metodo, Leitor leitor) { 
         for (Multa m : multas) {
             if (m.getIdEmprestimo().equals(idEmprestimo) && !m.isPaga()) {
                 m.setPaga(true);
@@ -112,7 +112,7 @@ public class MultaController {
                         m.getValor(),
                         LocalDate.now(),
                         metodo,
-                        usuario
+                        leitor
                 );
 
                 pagamentos.add(pagamento);
