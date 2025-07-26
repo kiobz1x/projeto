@@ -19,7 +19,7 @@ public class RegistrarPagamentoView extends JFrame {
     private final JLabel mensagem;
 
     public RegistrarPagamentoView() {
-    	setResizable(false);
+        setResizable(false);
         setTitle("💳 Registrar Pagamento de Multa");
         setSize(601, 300);
         setLocationRelativeTo(null);
@@ -64,47 +64,46 @@ public class RegistrarPagamentoView extends JFrame {
 
     private void registrarPagamento() {
         String matriculaLeitor = campoMatricula.getText().trim();
-        String valorTexto = campoValor.getText().trim();
         String metodoStr = (String) comboMetodo.getSelectedItem();
 
-        if (matriculaLeitor.isEmpty() || valorTexto.isEmpty()) {
+        if (matriculaLeitor.isEmpty() || metodoStr.equals(" ")) {
             mensagem.setText("⚠ Preencha todos os campos.");
             return;
         }
 
-//        UsuarioController usuarioController = new UsuarioController();
-//        Usuario usuario = usuarioController.buscarPorMatricula(matricula);
-        
         LeitorController leitorController = new LeitorController();
         Leitor leitor = leitorController.buscarLeitorPorMatricula(matriculaLeitor);
         if (leitor == null) {
-            mensagem.setText("❌ Usuário não encontrado.");
-            return;
-        }
-        try {
-            double valor = Double.parseDouble(campoValor.getText().trim());
-            if (valor < 0) {
-                mensagem.setText("⚠ Valor negativo não é permitido.");
-                return;
-            }
-        } catch (NumberFormatException e) {
-            mensagem.setText("⚠ Valor inválido. Use apenas números.");
+            mensagem.setText("❌ Leitor não encontrado.");
             return;
         }
 
-
+        MetodoPagamento metodo;
         try {
-            double valor = Double.parseDouble(valorTexto);
-            MetodoPagamento metodo = MetodoPagamento.valueOf(metodoStr);
-
-            PagamentoController pagamentoController = new PagamentoController();
-            pagamentoController.registrarPagamento(leitor, valor, metodo);
-            mensagem.setText("✅ Pagamento registrado com sucesso!");
-            limparCampos();
-        } catch (NumberFormatException e) {
-            mensagem.setText("❌ Valor inválido.");
+            metodo = MetodoPagamento.valueOf(metodoStr);
         } catch (IllegalArgumentException e) {
             mensagem.setText("❌ Método de pagamento inválido.");
+            return;
+        }
+
+        MultaController multaController = new MultaController();
+        java.util.List<Multa> multasPendentes = multaController.listarMultasPendentes();
+
+        boolean pagouAlguma = false;
+        for (Multa multa : multasPendentes) {
+            if (multa.getNomeLeitor().equalsIgnoreCase(leitor.getNome())) {
+                boolean sucesso = multaController.pagarMultaComRegistro(multa.getIdEmprestimo(), metodo, leitor);
+                if (sucesso) {
+                    pagouAlguma = true;
+                }
+            }
+        }
+
+        if (pagouAlguma) {
+            mensagem.setText("✅ Multa(s) paga(s) com sucesso!");
+            limparCampos();
+        } else {
+            mensagem.setText("⚠ Nenhuma multa pendente encontrada para este leitor.");
         }
     }
 
