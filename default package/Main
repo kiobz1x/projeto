@@ -1,0 +1,20 @@
+import controller.EmprestimoController;
+import controller.MultaController;
+
+import java.time.LocalDate;
+
+public class Main {
+    public static void main(String[] args) {
+        EmprestimoController controller = new EmprestimoController();
+
+        // Simula empréstimo feito há 10 dias
+        controller.realizarEmprestimoComData("6666", "1111", LocalDate.now().minusDays(4));
+
+        // Simula devolução hoje (atrasado para livro com prazo de 7 dias)
+        controller.realizarDevolucaoComData("1111", LocalDate.now());
+
+        // Gera a multa e mostra
+        MultaController multaController = new MultaController();
+        multaController.gerarMultasAutomaticamente(); // Reprocessa
+    }
+}
