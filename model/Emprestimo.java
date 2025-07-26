@@ -57,6 +57,12 @@ public class Emprestimo {
     @Override
     public String toString() {
         return String.format("ID: %s | Obra: %s | Leitor: %s | Empréstimo: %s | Previsto: %s | Devolvido: %s",
-            id, obra.getCodigo(), leitorId, getDataEmprestimoFormatada(), getDataPrevistaDevolucaoFormatada(), getDataDevolucaoFormatada());
+                id, obra.getCodigo(), leitorId, getDataEmprestimoFormatada(), getDataPrevistaDevolucaoFormatada(), getDataDevolucaoFormatada());
     }
+    public void setDataEmprestimo(LocalDate data) {
+        this.dataEmprestimo = data;
+        this.dataPrevistaDevolucao = data.plusDays(obra.getTempoEmprestimo());
+    }
+
+
 }
