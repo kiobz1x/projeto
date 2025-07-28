@@ -1,6 +1,7 @@
 package view;
 
 import controller.UsuarioController;
+import exception.UsuarioJaExisteException;
 import model.TipoUsuario;
 import model.Usuario;
 
@@ -16,7 +17,7 @@ public class CadastroUsuarioView extends JFrame {
     private final JLabel mensagem;
 
     public CadastroUsuarioView() {
-    	setResizable(false);
+        setResizable(false);
         setTitle("👤 Cadastro de Usuário");
         setSize(615, 485);
         setLocationRelativeTo(null);
@@ -24,15 +25,15 @@ public class CadastroUsuarioView extends JFrame {
         getContentPane().setLayout(new BorderLayout());
 
         JPanel painelCampos = new JPanel();
-        painelCampos.setBounds(90,155,200,50);
+        painelCampos.setBounds(90, 155, 200, 50);
         painelCampos.setBorder(BorderFactory.createEmptyBorder(20, 40, 10, 40));
         painelCampos.setLayout(null);
-        
+
         JLabel r = new JLabel("Cadastro de Usuarios");
         r.setFont(new Font("Arial", Font.PLAIN, 20));
         r.setBounds(212, 50, 212, 24);
         painelCampos.add(r);
-        
+
         JLabel nome = new JLabel("Nome:");
         nome.setFont(new Font("Verdana", Font.PLAIN, 14));
         nome.setBounds(154, 128, 76, 31);
@@ -42,7 +43,7 @@ public class CadastroUsuarioView extends JFrame {
         campoNome.setBounds(264, 129, 192, 28);
         painelCampos.add(campoNome);
         campoNome.setColumns(10);
-        
+
         JLabel matricula = new JLabel("Matrícula:");
         matricula.setFont(new Font("Verdana", Font.PLAIN, 14));
         matricula.setBounds(154, 176, 76, 31);
@@ -52,39 +53,39 @@ public class CadastroUsuarioView extends JFrame {
         campoMatricula.setColumns(10);
         campoMatricula.setBounds(264, 177, 192, 28);
         painelCampos.add(campoMatricula);
-        
+
         JLabel telefone = new JLabel("Telefone:");
         telefone.setFont(new Font("Verdana", Font.PLAIN, 14));
         telefone.setBounds(154, 227, 76, 31);
-        painelCampos.add(telefone);        
+        painelCampos.add(telefone);
         campoTelefone = new JTextField();
         campoTelefone.setFont(new Font("Verdana", Font.PLAIN, 14));
         campoTelefone.setColumns(10);
         campoTelefone.setBounds(264, 228, 192, 28);
         painelCampos.add(campoTelefone);
-        
+
         JLabel email = new JLabel("E-mail:");
         email.setFont(new Font("Verdana", Font.PLAIN, 14));
         email.setBounds(154, 268, 76, 31);
-        painelCampos.add(email);        
+        painelCampos.add(email);
         campoEmail = new JTextField();
         campoEmail.setFont(new Font("Verdana", Font.PLAIN, 14));
         campoEmail.setColumns(10);
         campoEmail.setBounds(264, 269, 192, 28);
         painelCampos.add(campoEmail);
-        
+
         JLabel tipo = new JLabel("Tipo de usuário:");
         tipo.setFont(new Font("Verdana", Font.PLAIN, 14));
         tipo.setBounds(106, 312, 124, 31);
-        painelCampos.add(tipo);        
-        comboTipo = new JComboBox<>(new String[] {" ","ADMINISTRADOR", "BIBLIOTECARIO", "ESTAGIARIO"});
+        painelCampos.add(tipo);
+        comboTipo = new JComboBox<>(new String[]{" ", "ADMINISTRADOR", "BIBLIOTECARIO", "ESTAGIARIO"});
         comboTipo.setBounds(264, 314, 192, 31);
         painelCampos.add(comboTipo);
-        
+
         mensagem = new JLabel("", SwingConstants.CENTER);
 
         getContentPane().add(painelCampos, BorderLayout.CENTER);
-        
+
         JButton botaoCadastrar = new JButton("Cadastrar");
         botaoCadastrar.setFont(new Font("Verdana", Font.PLAIN, 16));
         botaoCadastrar.setBounds(147, 389, 353, 21);
@@ -119,20 +120,17 @@ public class CadastroUsuarioView extends JFrame {
             return;
         }
 
-
         try {
             TipoUsuario tipo = TipoUsuario.valueOf(tipoStr);
             Usuario usuario = new Usuario(nome, matricula, tipo, telefone, email);
             UsuarioController controller = new UsuarioController();
 
-            boolean sucesso = controller.adicionarUsuario(usuario);
+            controller.adicionarUsuario(usuario);  // agora sem boolean
+            mensagem.setText("✅ Usuário cadastrado com sucesso!");
+            limparCampos();
 
-            if (sucesso) {
-                mensagem.setText("✅ Usuário cadastrado com sucesso!");
-                limparCampos();
-            } else {
-                mensagem.setText("❌ Matrícula já cadastrada.");
-            }
+        } catch (UsuarioJaExisteException e) {
+            mensagem.setText(e.getMessage());
         } catch (IllegalArgumentException e) {
             mensagem.setText("❌ Tipo de usuário inválido.");
         }
