@@ -4,6 +4,8 @@ import dao.MultaDAO;
 import dao.LeitorDAO;
 import dao.ObraDAO;
 import dao.PagamentoMultaDAO;
+import exception.MultaJaPagaException;
+import exception.MultaNaoEncontradaException;
 import model.*;
 
 import java.time.LocalDate;
@@ -87,17 +89,21 @@ public class MultaController {
         return pendentes;
     }
 
-    public boolean pagarMulta(String idEmprestimo) {
+    public boolean pagarMulta(String idEmprestimo) throws MultaNaoEncontradaException, MultaJaPagaException {
         for (Multa m : multas) {
-            if (m.getIdEmprestimo().equals(idEmprestimo) && !m.isPaga()) {
+            if (m.getIdEmprestimo().equals(idEmprestimo)) {
+                if (m.isPaga()) {
+                    throw new MultaJaPagaException("A multa do empréstimo " + idEmprestimo + " já foi paga.");
+                }
+
                 m.setPaga(true);
                 dao.salvar(multas);
                 System.out.println("✅ Multa paga com sucesso.");
                 return true;
             }
         }
-        System.out.println("❌ Multa não encontrada ou já paga.");
-        return false;
+
+        throw new MultaNaoEncontradaException("Nenhuma multa encontrada para o empréstimo " + idEmprestimo + ".");
     }
 
     // ✅ Novo método com registro completo
