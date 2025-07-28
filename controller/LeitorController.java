@@ -1,6 +1,7 @@
 package controller;
 
 import dao.LeitorDAO;
+import exception.LeitorJaExisteException;
 import model.Leitor;
 
 import java.util.List;
@@ -13,12 +14,12 @@ public class LeitorController {
         this.leitorDAO = new LeitorDAO();
     }
 
-    public boolean cadastrarLeitor(Leitor leitor) {
+    public void cadastrarLeitor(Leitor leitor) throws LeitorJaExisteException {
         if (leitorDAO.buscarPorMatricula(leitor.getMatricula()) != null) {
-            System.out.println("Já existe um leitor com esta matrícula.");
-            return false;
+            throw new LeitorJaExisteException();
         }
-        return leitorDAO.adicionar(leitor);
+        leitorDAO.adicionar(leitor);
+        System.out.println("✅ Leitor cadastrado com sucesso.");
     }
 
     public List<Leitor> listarLeitores() {
