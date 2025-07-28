@@ -1,0 +1,7 @@
+package exception;
+
+public class LeitorJaExisteException extends Exception {
+    public LeitorJaExisteException() {
+        super("⚠️ Leitor já está cadastrado no sistema.");
+    }
+}
