@@ -38,7 +38,6 @@ public class EmprestimoController {
             System.out.println("❌ Obra não encontrada.");
             return false;
         }
-
         if (!obra.isDisponivel()) {
             throw new EmprestimoJaRealizadoException("A obra com código " + obraCodigo + " já está emprestada.");
         }
@@ -56,37 +55,6 @@ public class EmprestimoController {
         emprestimoDAO.salvar(emprestimos);
 
         System.out.println("✅ Empréstimo realizado com sucesso!");
-        return true;
-    }
-
-    public boolean realizarEmprestimoComData(String leitorId, String obraCodigo, LocalDate dataEmprestimoForcada)
-            throws EmprestimoJaRealizadoException {
-
-        Leitor leitor = leitorDAO.buscarPorMatricula(leitorId);
-        Obra obra = obraDAO.buscarPorCodigo(obraCodigo);
-
-        if (leitor == null || obra == null) {
-            System.out.println("❌ Leitor ou obra não encontrados.");
-            return false;
-        }
-
-        if (!obra.isDisponivel()) {
-            throw new EmprestimoJaRealizadoException("A obra com código " + obraCodigo + " já está emprestada.");
-        }
-
-        boolean sucesso = obra.emprestar(dataEmprestimoForcada);
-        if (!sucesso) {
-            throw new EmprestimoJaRealizadoException("Erro ao emprestar a obra com data forçada.");
-        }
-
-        Emprestimo emp = new Emprestimo(leitorId, obra);
-        emp.setDataEmprestimo(dataEmprestimoForcada);
-
-        emprestimos.add(emp);
-        obraDAO.salvar(obraDAO.carregar());
-        emprestimoDAO.salvar(emprestimos);
-
-        System.out.println("📘 Empréstimo simulado com data: " + dataEmprestimoForcada);
         return true;
     }
 
@@ -122,28 +90,6 @@ public class EmprestimoController {
         throw new DevolucaoInvalidaException("Nenhum empréstimo ativo encontrado para a obra de código " + obraCodigo + ".");
     }
 
-    public boolean realizarDevolucaoComData(String obraCodigo, LocalDate dataDevolucaoForcada) throws DevolucaoInvalidaException {
-        Obra obra = obraDAO.buscarPorCodigo(obraCodigo);
-        if (obra == null || obra.isDisponivel()) {
-            throw new DevolucaoInvalidaException("Devolução inválida: obra não encontrada ou não está emprestada.");
-        }
-
-        for (Emprestimo emp : emprestimos) {
-            if (emp.getObra().getCodigo().equalsIgnoreCase(obraCodigo) && emp.getDataDevolucao() == null) {
-                emp.setDataDevolucao(dataDevolucaoForcada);
-
-                obra.devolver(dataDevolucaoForcada);
-                obraDAO.salvar(obraDAO.carregar());
-                emprestimoDAO.salvar(emprestimos);
-
-                System.out.println("📦 Devolução com data simulada: " + dataDevolucaoForcada);
-                return true;
-            }
-        }
-
-        throw new DevolucaoInvalidaException("Nenhum empréstimo ativo encontrado para essa obra.");
-    }
-
     public List<Emprestimo> listarEmprestimos() {
         return emprestimos;
     }
@@ -173,5 +119,53 @@ public class EmprestimoController {
 
     public Obra getObraDoEmprestimo(Emprestimo e) {
         return e.getObra();
+    }
+
+    public boolean realizarEmprestimoComData(String leitorId, String obraCodigo, LocalDate dataEmprestimoForcada)
+            throws EmprestimoJaRealizadoException {
+        Leitor leitor = leitorDAO.buscarPorMatricula(leitorId);
+        Obra obra = obraDAO.buscarPorCodigo(obraCodigo);
+
+        if (leitor == null || obra == null || !obra.isDisponivel()) {
+            System.out.println("❌ Erro: Leitor ou obra inválidos ou já emprestados.");
+            return false;
+        }
+
+        boolean sucesso = obra.emprestar(dataEmprestimoForcada);
+        if (!sucesso) {
+            throw new EmprestimoJaRealizadoException("A obra com código " + obraCodigo + " já está emprestada.");
+        }
+
+        Emprestimo emp = new Emprestimo(leitorId, obra);
+        emp.setDataEmprestimo(dataEmprestimoForcada); // ⚠️ Força a data
+
+        emprestimos.add(emp);
+        obraDAO.salvar(obraDAO.carregar());
+        emprestimoDAO.salvar(emprestimos);
+
+        System.out.println("📘 Empréstimo simulado com data: " + dataEmprestimoForcada);
+        return true;
+    }
+
+    public boolean realizarDevolucaoComData(String obraCodigo, LocalDate dataDevolucaoForcada) throws DevolucaoInvalidaException {
+        Obra obra = obraDAO.buscarPorCodigo(obraCodigo);
+        if (obra == null || obra.isDisponivel()) {
+            throw new DevolucaoInvalidaException("Devolução inválida: obra não encontrada ou não está emprestada.");
+        }
+
+        for (Emprestimo emp : emprestimos) {
+            if (emp.getObra().getCodigo().equalsIgnoreCase(obraCodigo) && emp.getDataDevolucao() == null) {
+                emp.setDataDevolucao(dataDevolucaoForcada);
+
+                obra.devolver(dataDevolucaoForcada);
+                obraDAO.salvar(obraDAO.carregar());
+                emprestimoDAO.salvar(emprestimos);
+
+                System.out.println("📦 Devolução com data simulada: " + dataDevolucaoForcada);
+                return true;
+            }
+        }
+
+        throw new DevolucaoInvalidaException("Nenhum empréstimo ativo encontrado para essa obra.");
     }
 }
