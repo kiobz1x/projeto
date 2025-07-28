@@ -1,6 +1,7 @@
 package controller;
 
 import dao.UsuarioDAO;
+import exception.UsuarioJaExisteException;
 import model.Usuario;
 
 import java.util.List;
@@ -14,18 +15,16 @@ public class UsuarioController {
         this.usuarios = dao.carregar();
     }
 
-    public boolean adicionarUsuario(Usuario novo) {
+    public void adicionarUsuario(Usuario novo) throws UsuarioJaExisteException {
         // Verifica se já existe matrícula
         for (Usuario u : usuarios) {
-            if (u.getMatricula().equals(novo.getMatricula())) {
-                System.out.println("❌ Já existe um usuário com essa matrícula.");
-                return false;
+            if (u.getMatricula().equalsIgnoreCase(novo.getMatricula())) {
+                throw new UsuarioJaExisteException();
             }
         }
         usuarios.add(novo);
         dao.salvar(usuarios);
         System.out.println("✅ Usuário adicionado com sucesso.");
-        return true;
     }
 
     public Usuario buscarPorMatricula(String matricula) {
@@ -37,10 +36,9 @@ public class UsuarioController {
         return null;
     }
 
-
     public boolean editarUsuario(String matricula, String novoTelefone, String novoEmail) {
         for (Usuario u : usuarios) {
-            if (u.getMatricula().equals(matricula)) {
+            if (u.getMatricula().equalsIgnoreCase(matricula)) {
                 u.setTelefone(novoTelefone);
                 u.setEmail(novoEmail);
                 dao.salvar(usuarios);
@@ -54,7 +52,7 @@ public class UsuarioController {
 
     public boolean removerUsuario(String matricula) {
         for (Usuario u : usuarios) {
-            if (u.getMatricula().equals(matricula)) {
+            if (u.getMatricula().equalsIgnoreCase(matricula)) {
                 usuarios.remove(u);
                 dao.salvar(usuarios);
                 System.out.println("✅ Usuário removido com sucesso.");
