@@ -1,0 +1,8 @@
+package exception;
+
+public class ObraNaoEncontradaException extends Exception {
+    public ObraNaoEncontradaException() {
+        super("❌ Obra não encontrada no sistema.");
+    }
+}
+
