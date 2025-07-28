@@ -3,6 +3,8 @@ package view;
 import controller.EmprestimoController;
 import controller.LeitorController;
 import controller.ObraController;
+import exception.ObraNaoDisponivelException;
+import exception.ObraNaoEncontradaException;
 import model.Leitor;
 import model.Obra;
 
@@ -15,7 +17,7 @@ public class RegistrarEmprestimoView extends JFrame {
     private final JLabel mensagem;
 
     public RegistrarEmprestimoView() {
-    	setResizable(false);
+        setResizable(false);
         setTitle("📥 Registrar Empréstimo");
         setSize(400, 250);
         setLocationRelativeTo(null);
@@ -76,18 +78,17 @@ public class RegistrarEmprestimoView extends JFrame {
             return;
         }
 
-        if (!obra.isDisponivel()) {
-            mensagem.setText("❌ Obra já está emprestada.");
-            return;
-        }
+        try {
+            boolean sucesso = emprestimoController.realizarEmprestimo(leitor.getMatricula(), obra.getCodigo());
 
-        boolean sucesso = emprestimoController.realizarEmprestimo(leitor.getMatricula(), obra.getCodigo());
-
-        if (sucesso) {
-            mensagem.setText("✅ Empréstimo registrado com sucesso!");
-            limparCampos();
-        } else {
-            mensagem.setText("❌ Falha ao registrar o empréstimo.");
+            if (sucesso) {
+                mensagem.setText("✅ Empréstimo registrado com sucesso!");
+                limparCampos();
+            } else {
+                mensagem.setText("❌ Falha ao registrar o empréstimo.");
+            }
+        } catch (ObraNaoEncontradaException | ObraNaoDisponivelException e) {
+            mensagem.setText("❌ " + e.getMessage());
         }
     }
 
