@@ -1,9 +1,0 @@
-package exception;
-
-public class ObraNaoDisponivelException extends Exception {
-
-  // ✅ Construtor com mensagem personalizada
-  public ObraNaoDisponivelException(String message) {
-    super(message);
-  }
-}
