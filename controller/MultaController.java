@@ -4,8 +4,8 @@ import dao.MultaDAO;
 import dao.LeitorDAO;
 import dao.ObraDAO;
 import dao.PagamentoMultaDAO;
-import exception.MultaJaPagaException;
-import exception.MultaNaoEncontradaException;
+import exception.multa.MultaJaPagaException;
+import exception.multa.MultaNaoEncontradaException;
 import model.*;
 
 import java.time.LocalDate;
