@@ -1,7 +1,7 @@
 package view;
 
 import controller.LeitorController;
-import exception.LeitorJaExisteException;
+import exception.leitor.LeitorJaExisteException;
 import model.Leitor;
 import model.TipoLeitor;
 
