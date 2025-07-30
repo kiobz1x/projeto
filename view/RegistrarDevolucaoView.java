@@ -1,6 +1,7 @@
 package view;
 
 import controller.EmprestimoController;
+import exception.emprestimo.DevolucaoInvalidaException;
 import model.Emprestimo;
 import model.Obra;
 
@@ -27,7 +28,14 @@ public class RegistrarDevolucaoView extends JFrame {
         painel.add(campoCodigo);
 
         JButton botaoRegistrar = new JButton("Registrar");
-        botaoRegistrar.addActionListener(e -> registrarDevolucao());
+        botaoRegistrar.addActionListener(e -> {
+			try {
+				registrarDevolucao();
+			} catch (DevolucaoInvalidaException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		});
         painel.add(botaoRegistrar);
 
         // Mensagem
@@ -38,7 +46,7 @@ public class RegistrarDevolucaoView extends JFrame {
         setVisible(true);
     }
 
-    private void registrarDevolucao() {
+    private void registrarDevolucao() throws DevolucaoInvalidaException {
         String codigo = campoCodigo.getText().trim();
 
         if (codigo.isEmpty()) {
