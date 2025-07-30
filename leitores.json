@@ -1,23 +1,37 @@
 [
   {
     "nome": "Maria Silva",
-    "matricula": "12345",
+    "matricula": "LEI-00001",
     "tipo": "ALUNO",
     "telefone": "83999999999",
     "email": "maria@ifpb.edu.br"
   },
   {
     "nome": "João Souza",
-    "matricula": "54321",
+    "matricula": "LEI-00002",
     "tipo": "PROFESSOR",
     "telefone": "83988888888",
     "email": "joao@ifpb.edu.br"
   },
   {
-    "nome": "kaio Bezerra",
-    "matricula": "1010",
+    "nome": "Kaio Bezerra",
+    "matricula": "LEI-00003",
     "tipo": "ALUNO",
     "telefone": "981456917",
     "email": "kaiob22@gmail.com"
+  },
+  {
+    "nome": "Cecilia Emmanoele",
+    "matricula": "LEI-00004",
+    "tipo": "ALUNO",
+    "telefone": "8340028922",
+    "email": "Cecilia.Emmanoele@ifpb.edu.br"
+  },
+  {
+    "nome": "Afonso Padilha",
+    "matricula": "LEI-00005",
+    "tipo": "PROFESSOR",
+    "telefone": "940028922",
+    "email": "Afonso.pp@gmail.com"
   }
 ]
