@@ -1,11 +1,22 @@
 package model;
 
 public class Leitor {
+    private static int contadorMatricula = 1;
+
     private String nome;
-    private String matricula; // também único
+    private String matricula; // único
     private TipoLeitor tipo;
     private String telefone;
     private String email;
+
+    // matrícula automatica
+    public Leitor(String nome, TipoLeitor tipo, String telefone, String email) {
+        this.nome = nome;
+        this.tipo = tipo;
+        this.telefone = telefone;
+        this.email = email;
+        this.matricula = gerarMatricula();
+    }
 
     public Leitor(String nome, String matricula, TipoLeitor tipo, String telefone, String email) {
         this.nome = nome;
@@ -13,6 +24,12 @@ public class Leitor {
         this.tipo = tipo;
         this.telefone = telefone;
         this.email = email;
+    }
+
+    private String gerarMatricula() {
+        String novaMatricula = String.format("LEI-%05d", contadorMatricula);
+        contadorMatricula++;
+        return novaMatricula;
     }
 
     // Getters & Setters
@@ -36,9 +53,12 @@ public class Leitor {
         return email;
     }
 
-    // Setters
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public void setMatricula(String matricula) {
+        this.matricula = matricula;
     }
 
     public void setTelefone(String telefone) {
@@ -58,4 +78,3 @@ public class Leitor {
         return "[" + matricula + "] " + nome + " - " + tipo;
     }
 }
-
