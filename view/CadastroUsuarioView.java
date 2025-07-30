@@ -1,7 +1,7 @@
 package view;
 
 import controller.UsuarioController;
-import exception.usuario.UsuarioJaExisteException;
+import exception.UsuarioJaExisteException;
 import model.TipoUsuario;
 import model.Usuario;
 
@@ -10,7 +10,6 @@ import java.awt.*;
 
 public class CadastroUsuarioView extends JFrame {
     private final JTextField campoNome;
-    private final JTextField campoMatricula;
     private final JTextField campoTelefone;
     private final JTextField campoEmail;
     private final JComboBox<String> comboTipo;
@@ -29,7 +28,7 @@ public class CadastroUsuarioView extends JFrame {
         painelCampos.setBorder(BorderFactory.createEmptyBorder(20, 40, 10, 40));
         painelCampos.setLayout(null);
 
-        JLabel r = new JLabel("Cadastro de Usuarios");
+        JLabel r = new JLabel("Cadastro de Usuários");
         r.setFont(new Font("Arial", Font.PLAIN, 20));
         r.setBounds(212, 50, 212, 24);
         painelCampos.add(r);
@@ -44,77 +43,68 @@ public class CadastroUsuarioView extends JFrame {
         painelCampos.add(campoNome);
         campoNome.setColumns(10);
 
-        JLabel matricula = new JLabel("Matrícula:");
-        matricula.setFont(new Font("Verdana", Font.PLAIN, 14));
-        matricula.setBounds(154, 176, 76, 31);
-        painelCampos.add(matricula);
-        campoMatricula = new JTextField();
-        campoMatricula.setFont(new Font("Verdana", Font.PLAIN, 14));
-        campoMatricula.setColumns(10);
-        campoMatricula.setBounds(264, 177, 192, 28);
-        painelCampos.add(campoMatricula);
-
         JLabel telefone = new JLabel("Telefone:");
         telefone.setFont(new Font("Verdana", Font.PLAIN, 14));
-        telefone.setBounds(154, 227, 76, 31);
+        telefone.setBounds(154, 176, 76, 31);
         painelCampos.add(telefone);
         campoTelefone = new JTextField();
         campoTelefone.setFont(new Font("Verdana", Font.PLAIN, 14));
         campoTelefone.setColumns(10);
-        campoTelefone.setBounds(264, 228, 192, 28);
+        campoTelefone.setBounds(264, 177, 192, 28);
         painelCampos.add(campoTelefone);
 
         JLabel email = new JLabel("E-mail:");
         email.setFont(new Font("Verdana", Font.PLAIN, 14));
-        email.setBounds(154, 268, 76, 31);
+        email.setBounds(154, 218, 76, 31);
         painelCampos.add(email);
         campoEmail = new JTextField();
         campoEmail.setFont(new Font("Verdana", Font.PLAIN, 14));
         campoEmail.setColumns(10);
-        campoEmail.setBounds(264, 269, 192, 28);
+        campoEmail.setBounds(264, 219, 192, 28);
         painelCampos.add(campoEmail);
 
         JLabel tipo = new JLabel("Tipo de usuário:");
         tipo.setFont(new Font("Verdana", Font.PLAIN, 14));
-        tipo.setBounds(106, 312, 124, 31);
+        tipo.setBounds(106, 260, 124, 31);
         painelCampos.add(tipo);
         comboTipo = new JComboBox<>(new String[]{" ", "ADMINISTRADOR", "BIBLIOTECARIO", "ESTAGIARIO"});
-        comboTipo.setBounds(264, 314, 192, 31);
+        comboTipo.setBounds(264, 262, 192, 31);
         painelCampos.add(comboTipo);
 
         mensagem = new JLabel("", SwingConstants.CENTER);
-
+        getContentPane().add(mensagem, BorderLayout.NORTH);
         getContentPane().add(painelCampos, BorderLayout.CENTER);
 
         JButton botaoCadastrar = new JButton("Cadastrar");
         botaoCadastrar.setFont(new Font("Verdana", Font.PLAIN, 16));
-        botaoCadastrar.setBounds(147, 389, 353, 21);
+        botaoCadastrar.setBounds(147, 340, 353, 21);
         painelCampos.add(botaoCadastrar);
         botaoCadastrar.addActionListener(e -> cadastrarUsuario());
-        getContentPane().add(mensagem, BorderLayout.NORTH);
 
         setVisible(true);
     }
 
     private void cadastrarUsuario() {
         String nome = campoNome.getText().trim();
-        String matricula = campoMatricula.getText().trim();
         String telefone = campoTelefone.getText().trim();
         String email = campoEmail.getText().trim();
         String tipoStr = (String) comboTipo.getSelectedItem();
 
-        if (nome.isEmpty() || matricula.isEmpty() || telefone.isEmpty() || email.isEmpty()) {
+        if (nome.isEmpty() || telefone.isEmpty() || email.isEmpty()) {
             mensagem.setText("⚠ Preencha todos os campos.");
             return;
         }
+
         if (!telefone.matches("\\d+")) {
             mensagem.setText("⚠ O telefone deve conter apenas números.");
             return;
         }
+
         if (!email.matches("^[\\w\\.-]+@[\\w\\.-]+\\.\\w{2,}$")) {
             mensagem.setText("⚠ E-mail inválido. Ex: exemplo@dominio.com");
             return;
         }
+
         if (!nome.matches("^[A-Za-zÀ-ÿ ]+$")) {
             mensagem.setText("⚠ O nome deve conter apenas letras.");
             return;
@@ -122,11 +112,11 @@ public class CadastroUsuarioView extends JFrame {
 
         try {
             TipoUsuario tipo = TipoUsuario.valueOf(tipoStr);
-            Usuario usuario = new Usuario(nome, matricula, tipo, telefone, email);
+            Usuario usuario = new Usuario(nome, tipo, telefone, email); // matrícula gerada automaticamente
             UsuarioController controller = new UsuarioController();
 
-            controller.adicionarUsuario(usuario);  // agora sem boolean
-            mensagem.setText("✅ Usuário cadastrado com sucesso!");
+            controller.adicionarUsuario(usuario);
+            mensagem.setText("✅ Usuário cadastrado com sucesso! Matrícula: " + usuario.getMatricula());
             limparCampos();
 
         } catch (UsuarioJaExisteException e) {
@@ -138,7 +128,6 @@ public class CadastroUsuarioView extends JFrame {
 
     private void limparCampos() {
         campoNome.setText("");
-        campoMatricula.setText("");
         campoTelefone.setText("");
         campoEmail.setText("");
         comboTipo.setSelectedIndex(0);
