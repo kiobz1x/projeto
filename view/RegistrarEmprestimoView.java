@@ -3,8 +3,9 @@ package view;
 import controller.EmprestimoController;
 import controller.LeitorController;
 import controller.ObraController;
-import exception.ObraNaoDisponivelException;
-import exception.ObraNaoEncontradaException;
+import exception.emprestimo.EmprestimoJaRealizadoException;
+//import exception.obras.ObraNaoDisponivelException;
+//import exception.obras.ObraNaoEncontradaException;
 import model.Leitor;
 import model.Obra;
 
@@ -27,23 +28,30 @@ public class RegistrarEmprestimoView extends JFrame {
         JPanel painel = new JPanel(new GridLayout(3, 2, 10, 10));
         painel.setBorder(BorderFactory.createEmptyBorder(20, 40, 10, 40));
 
-        JLabel label_1 = new JLabel("Matrícula do leitor:");
-        label_1.setFont(new Font("Verdana", Font.PLAIN, 14));
-        painel.add(label_1);
+        JLabel matricula = new JLabel("Matrícula do leitor:");
+        matricula.setFont(new Font("Verdana", Font.PLAIN, 14));
+        painel.add(matricula);
         campoMatricula = new JTextField();
         campoMatricula.setFont(new Font("Verdana", Font.PLAIN, 14));
         painel.add(campoMatricula);
 
-        JLabel label = new JLabel("Código da obra:");
-        label.setFont(new Font("Verdana", Font.PLAIN, 14));
-        painel.add(label);
+        JLabel codigo = new JLabel("Código da obra:");
+        codigo.setFont(new Font("Verdana", Font.PLAIN, 14));
+        painel.add(codigo);
         campoCodigoObra = new JTextField();
         campoCodigoObra.setFont(new Font("Verdana", Font.PLAIN, 14));
         painel.add(campoCodigoObra);
 
         JButton botaoRegistrar = new JButton("Registrar");
         botaoRegistrar.setFont(new Font("Verdana", Font.PLAIN, 16));
-        botaoRegistrar.addActionListener(e -> registrarEmprestimo());
+        botaoRegistrar.addActionListener(e -> {
+			try {
+				registrarEmprestimo();
+			} catch (EmprestimoJaRealizadoException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		});
         painel.add(botaoRegistrar);
 
         mensagem = new JLabel("", SwingConstants.CENTER);
@@ -53,7 +61,7 @@ public class RegistrarEmprestimoView extends JFrame {
         setVisible(true);
     }
 
-    private void registrarEmprestimo() {
+    private void registrarEmprestimo() throws EmprestimoJaRealizadoException { //adicionei throws EmprestimoJaRealizadoException
         String matricula = campoMatricula.getText().trim();
         String codigoObra = campoCodigoObra.getText().trim();
 
@@ -87,7 +95,7 @@ public class RegistrarEmprestimoView extends JFrame {
             } else {
                 mensagem.setText("❌ Falha ao registrar o empréstimo.");
             }
-        } catch (ObraNaoEncontradaException | ObraNaoDisponivelException e) {
+        } catch (EmprestimoJaRealizadoException e) { //antes tava ObraNaoEncontradaException | ObraNaoDisponivelException e, mudei para EmprestimoJaRealizadoException e
             mensagem.setText("❌ " + e.getMessage());
         }
     }
