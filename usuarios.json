@@ -1,3 +1,4 @@
-[{"nome":"Ana Admin","matricula":"111","tipo":"ADMINISTRADOR","telefone":"99999-1111","email":"ana@biblioteca.com"},
-{"nome":"Bruno Biblio","matricula":"222","tipo":"BIBLIOTECARIO","telefone":"99999-2222","email":"bruno@biblioteca.com"},
-{"nome":"Clara Estagiária","matricula":"333","tipo":"ESTAGIARIO","telefone":"99999-3333","email":"clara@biblioteca.com"}]
+[{"nome":"Ana Admin","matricula":"USU-00001","tipo":"ADMINISTRADOR","telefone":"99999-1111","email":"ana@biblioteca.com"},
+{"nome":"Bruno Biblio","matricula":"USU-00002","tipo":"BIBLIOTECARIO","telefone":"99999-2222","email":"bruno@biblioteca.com"},
+{"nome":"Clara Estagiária","matricula":"USU-00003","tipo":"ESTAGIARIO","telefone":"99999-3333","email":"clara@biblioteca.com"},
+{"nome":"Cecilia Emmanoele","matricula":"USU-00006","tipo":"ESTAGIARIO","telefone":"940028922","email":"Cecilia@bibliote.com"}]
