@@ -6,9 +6,9 @@ import java.util.List;
 import dao.EmprestimoDAO;
 import dao.LeitorDAO;
 import dao.ObraDAO;
-import exception.emprestimo.DevolucaoInvalidaException;
-import exception.emprestimo.EmprestimoJaRealizadoException;
-import exception.emprestimo.EmprestimoNaoEncontradoException;
+import exception.DevolucaoInvalidaException;
+import exception.EmprestimoJaRealizadoException;
+import exception.EmprestimoNaoEncontradoException;
 import model.Emprestimo;
 import model.Leitor;
 import model.Obra;
@@ -51,7 +51,7 @@ public class EmprestimoController {
         Emprestimo novoEmprestimo = new Emprestimo(leitorId, obra);
         emprestimos.add(novoEmprestimo);
 
-        obraDAO.salvar(obraDAO.carregar());
+        atualizarObraNoArquivo(obra);
         emprestimoDAO.salvar(emprestimos);
 
         System.out.println("✅ Empréstimo realizado com sucesso!");
@@ -73,12 +73,11 @@ public class EmprestimoController {
                 emp.setDataDevolucao(LocalDate.now());
 
                 obra.devolver(LocalDate.now());
-                obraDAO.salvar(obraDAO.carregar());
+                atualizarObraNoArquivo(obra);
                 emprestimoDAO.salvar(emprestimos);
 
                 if (emp.getDataDevolucao().isAfter(emp.getDataPrevistaDevolucao())) {
                     System.out.println("⚠ Devolução com atraso! Multa deve ser gerada.");
-                    // multaController.gerarMulta(emp);
                 } else {
                     System.out.println("✅ Devolução no prazo.");
                 }
@@ -137,10 +136,10 @@ public class EmprestimoController {
         }
 
         Emprestimo emp = new Emprestimo(leitorId, obra);
-        emp.setDataEmprestimo(dataEmprestimoForcada); // ⚠️ Força a data
+        emp.setDataEmprestimo(dataEmprestimoForcada);
 
         emprestimos.add(emp);
-        obraDAO.salvar(obraDAO.carregar());
+        atualizarObraNoArquivo(obra);
         emprestimoDAO.salvar(emprestimos);
 
         System.out.println("📘 Empréstimo simulado com data: " + dataEmprestimoForcada);
@@ -158,7 +157,7 @@ public class EmprestimoController {
                 emp.setDataDevolucao(dataDevolucaoForcada);
 
                 obra.devolver(dataDevolucaoForcada);
-                obraDAO.salvar(obraDAO.carregar());
+                atualizarObraNoArquivo(obra);
                 emprestimoDAO.salvar(emprestimos);
 
                 System.out.println("📦 Devolução com data simulada: " + dataDevolucaoForcada);
@@ -167,5 +166,17 @@ public class EmprestimoController {
         }
 
         throw new DevolucaoInvalidaException("Nenhum empréstimo ativo encontrado para essa obra.");
+    }
+
+    // 👉 Função auxiliar para atualizar uma obra específica no JSON
+    private void atualizarObraNoArquivo(Obra obraAtualizada) {
+        List<Obra> obras = obraDAO.carregar();
+        for (int i = 0; i < obras.size(); i++) {
+            if (obras.get(i).getCodigo().equalsIgnoreCase(obraAtualizada.getCodigo())) {
+                obras.set(i, obraAtualizada);
+                break;
+            }
+        }
+        obraDAO.salvar(obras);
     }
 }
