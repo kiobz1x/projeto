@@ -47,20 +47,71 @@
     "dataDevolucao": "2025-07-22"
   },
   {
-    "id": "E429",
+    "id": "E613",
     "leitorId": "1010",
     "obra": {
-      "codigo": "L001",
-      "titulo": "Java Básico",
-      "autor": "João Silva",
-      "anoPublicacao": 2020,
+      "codigo": "R001",
+      "titulo": "Ciência Hoje",
+      "autor": "Ana Souza",
+      "anoPublicacao": 2023,
       "emprestado": true,
-      "dataEmprestimo": "2025-07-22",
-      "dataPrevistaDevolucao": "2025-07-29",
+      "dataEmprestimo": "2025-07-24",
+      "dataPrevistaDevolucao": "2025-07-27",
+      "tipo": "revista"
+    },
+    "dataEmprestimo": "2025-07-24",
+    "dataPrevistaDevolucao": "2025-07-27",
+    "dataDevolucao": "2025-07-24"
+  },
+  {
+    "id": "E792",
+    "leitorId": "1010",
+    "obra": {
+      "codigo": "R001",
+      "titulo": "Ciência Hoje",
+      "autor": "Ana Souza",
+      "anoPublicacao": 2023,
+      "emprestado": true,
+      "dataEmprestimo": "2025-07-24",
+      "dataPrevistaDevolucao": "2025-07-27",
+      "tipo": "revista"
+    },
+    "dataEmprestimo": "2025-07-24",
+    "dataPrevistaDevolucao": "2025-07-27",
+    "dataDevolucao": "2025-07-24"
+  },
+  {
+    "id": "E122",
+    "leitorId": "12345",
+    "obra": {
+      "codigo": "L002",
+      "titulo": "Java Avançado",
+      "autor": "Machado de Assis",
+      "anoPublicacao": 2018,
+      "emprestado": true,
+      "dataEmprestimo": "2025-07-24",
+      "dataPrevistaDevolucao": "2025-07-31",
       "tipo": "livro"
     },
-    "dataEmprestimo": "2025-07-22",
-    "dataPrevistaDevolucao": "2025-07-29",
-    "dataDevolucao": "2025-07-22"
+    "dataEmprestimo": "2025-07-24",
+    "dataPrevistaDevolucao": "2025-07-31",
+    "dataDevolucao": "2025-08-24"
+  },
+  {
+    "id": "E275",
+    "leitorId": "lei-00005",
+    "obra": {
+      "codigo": "K101",
+      "titulo": "As 5 linguagens do amor",
+      "autor": "Friedrich Nietzsche",
+      "anoPublicacao": 2018,
+      "emprestado": true,
+      "dataEmprestimo": "2025-07-31",
+      "dataPrevistaDevolucao": "2025-08-07",
+      "tipo": "livro"
+    },
+    "dataEmprestimo": "2025-07-31",
+    "dataPrevistaDevolucao": "2025-08-07",
+    "dataDevolucao": "2025-07-31"
   }
 ]
