@@ -1,7 +1,0 @@
-package exception;
-
-public class UsuarioJaExisteException extends Exception {
-    public UsuarioJaExisteException() {
-        super("⚠️ Usuário já está cadastrado no sistema.");
-    }
-}
