@@ -1,5 +1,7 @@
 package view;
 
+import controller.LeitorController;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -9,7 +11,7 @@ public class ExcluirLeitoresView extends JFrame {
 
     public ExcluirLeitoresView() {
         setResizable(false);
-        setTitle("👤 Cadastro de Leitores");
+        setTitle("👤 Excluir Leitores");
         setSize(797, 383);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -56,8 +58,16 @@ public class ExcluirLeitoresView extends JFrame {
             return;
         }
     	
-    	mensagem.setText("✅ Usuário excluido com sucesso");
-    	limparCampos();
+    	LeitorController controller = new LeitorController();
+    	boolean removerLeitor = controller.removerLeitor(excluirLeitor);
+    	
+    	if(removerLeitor) {
+    		mensagem.setText("✅ Leitor excluido com sucesso");
+        	limparCampos();
+    	}else {
+    		mensagem.setText("❌ Leitor não encontrado.");
+    	}
+    	
     }
 
     private void limparCampos() {
