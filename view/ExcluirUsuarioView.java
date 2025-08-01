@@ -1,5 +1,7 @@
 package view;
 
+import controller.UsuarioController;
+
 import java.awt.BorderLayout;
 import java.awt.Font;
 
@@ -63,8 +65,15 @@ public class ExcluirUsuarioView extends JFrame{
             return;
         }
     	
-    	mensagem.setText("✅ Usuário excluido com sucesso");
-    	limparCampos();
+    	UsuarioController controller = new UsuarioController();
+    	boolean removerUsuario = controller.removerUsuario(excluirUsuario);
+    	
+    	if(removerUsuario) {
+        	mensagem.setText("✅ Usuário excluido com sucesso");
+        	limparCampos();
+    	}else {
+    		mensagem.setText("❌ Usuário não encontrado.");
+    	}
     }
 
     private void limparCampos() {
