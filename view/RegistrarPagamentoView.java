@@ -1,13 +1,10 @@
 package view;
 
-import controller.PagamentoController;
-import controller.UsuarioController;
 import controller.LeitorController;
 import controller.MultaController;
 import model.Multa;
 import model.Leitor;
 import model.MetodoPagamento;
-import model.Usuario;
 
 import javax.swing.*;
 import java.awt.*;
@@ -29,23 +26,23 @@ public class RegistrarPagamentoView extends JFrame {
         JPanel painel = new JPanel(new GridLayout(4, 2, 10, 10));
         painel.setBorder(BorderFactory.createEmptyBorder(20, 40, 10, 40));
 
-        JLabel label_2 = new JLabel("Matrícula do usuário:");
-        label_2.setFont(new Font("Verdana", Font.PLAIN, 14));
-        painel.add(label_2);
+        JLabel matricula = new JLabel("Matrícula do usuário:");
+        matricula.setFont(new Font("Verdana", Font.PLAIN, 14));
+        painel.add(matricula);
         campoMatricula = new JTextField();
         campoMatricula.setFont(new Font("Verdana", Font.PLAIN, 14));
         painel.add(campoMatricula);
 
-        JLabel label_1 = new JLabel("Valor da multa (R$):");
-        label_1.setFont(new Font("Verdana", Font.PLAIN, 14));
-        painel.add(label_1);
+        JLabel valorMulta = new JLabel("Valor da multa (R$):");
+        valorMulta.setFont(new Font("Verdana", Font.PLAIN, 14));
+        painel.add(valorMulta);
         campoValor = new JTextField();
         campoValor.setFont(new Font("Verdana", Font.PLAIN, 14));
         painel.add(campoValor);
 
-        JLabel label = new JLabel("Método de pagamento:");
-        label.setFont(new Font("Verdana", Font.PLAIN, 14));
-        painel.add(label);
+        JLabel metodoPagamento = new JLabel("Método de pagamento:");
+        metodoPagamento.setFont(new Font("Verdana", Font.PLAIN, 14));
+        painel.add(metodoPagamento);
         comboMetodo = new JComboBox<>(new String[]{" ", "DINHEIRO", "PIX", "CARTAO"});
         comboMetodo.setFont(new Font("Verdana", Font.PLAIN, 14));
         painel.add(comboMetodo);
