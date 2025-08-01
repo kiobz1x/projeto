@@ -2,6 +2,7 @@ package dao;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+
 import model.Usuario;
 
 import java.io.FileReader;
@@ -43,6 +44,29 @@ public class UsuarioDAO implements Persistivel<Usuario> {
             }
         }
         return null;
+    }
+    
+    public boolean adicionarUsuario(Usuario usuario) {
+    	List<Usuario> usuarios = carregar();
+    	for(Usuario u: usuarios) {
+    		if(u.getMatricula().equalsIgnoreCase(usuario.getMatricula())) {
+    			return false;
+    		}
+    	}
+    	
+        usuarios.add(usuario);
+        salvar(usuarios);
+        return true;
+    }
+    
+    public boolean removerUsuario(String matricula) {
+    	List<Usuario> usuarios = carregar();
+    	boolean removerUsuario = usuarios.removeIf(u -> u.getMatricula().equalsIgnoreCase(matricula.trim()));
+    	if(removerUsuario) {
+    		salvar(usuarios);
+    	}
+    	
+    	return removerUsuario;
     }
 }
 
