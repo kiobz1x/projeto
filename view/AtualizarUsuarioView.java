@@ -135,7 +135,7 @@ public class AtualizarUsuarioView extends JFrame{
             TipoUsuario tipo = TipoUsuario.valueOf(tipoStr);
             Usuario usuario = new Usuario(nomeNovo, tipo, telefoneNovo, emailNovo); // matrícula automática
             UsuarioController controller = new UsuarioController();
-            controller.atualizarUsuario(nomeNovo, tipo ,telefoneNovo, emailNovo);
+            controller.editarUsuario(nomeNovo, tipo ,telefoneNovo, emailNovo);
             mensagem.setText("✅ Usuario atualizado com sucesso!");
             limparCampos();
         } catch (IllegalArgumentException e) {
