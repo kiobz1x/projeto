@@ -3,6 +3,7 @@ package controller;
 import dao.LeitorDAO;
 import dao.UsuarioDAO;
 import exception.usuario.UsuarioJaExisteException;
+import model.TipoUsuario;
 import model.Usuario;
 
 import java.util.List;
@@ -31,23 +32,21 @@ public class UsuarioController {
             throw new UsuarioJaExisteException("Usuário já existe com matrícula: " + novaMatricula);
         }
 
+        List<Usuario> usuarios = dao.carregar();
         usuarios.add(novo);
         dao.salvar(usuarios);
         System.out.println("✅ Usuário adicionado com sucesso. Matrícula: " + novaMatricula);
     }
 
     public Usuario buscarPorMatricula(String matricula) {
-        for (Usuario u : usuarios) {
-            if (u.getMatricula().equalsIgnoreCase(matricula)) {
-                return u;
-            }
-        }
-        return null;
+        return dao.buscarPorMatricula(matricula);
     }
 
-    public boolean editarUsuario(String matricula, String novoTelefone, String novoEmail) {
+    public boolean editarUsuario(String matricula, String nomeNovo, String novoTelefone, String novoEmail) {
+    	List<Usuario> usuario = dao.carregar();
         for (Usuario u : usuarios) {
             if (u.getMatricula().equalsIgnoreCase(matricula)) {
+            	u.setNome(nomeNovo);
                 u.setTelefone(novoTelefone);
                 u.setEmail(novoEmail);
                 dao.salvar(usuarios);
@@ -60,19 +59,20 @@ public class UsuarioController {
     }
 
     public boolean removerUsuario(String matricula) {
-        for (Usuario u : usuarios) {
-            if (u.getMatricula().equalsIgnoreCase(matricula)) {
-                usuarios.remove(u);
-                dao.salvar(usuarios);
-                System.out.println("✅ Usuário removido com sucesso.");
-                return true;
-            }
+    	List<Usuario> usuarios = dao.carregar();
+        boolean removerUsuario = usuarios.removeIf(u -> u.getMatricula().equalsIgnoreCase(matricula));
+        if (removerUsuario) {
+            dao.salvar(usuarios);
+            System.out.println("✅ Usuário removido com sucesso.");
+            return removerUsuario;
+            
         }
         System.out.println("❌ Usuário não encontrado.");
         return false;
     }
 
     public void listarUsuarios() {
+    	List<Usuario> usuarios = dao.carregar();
         if (usuarios.isEmpty()) {
             System.out.println("📭 Nenhum usuário cadastrado.");
         } else {
@@ -115,4 +115,5 @@ public class UsuarioController {
 
         return String.format("USU-%05d", maiorNumero + 1);
     }
+
 }
