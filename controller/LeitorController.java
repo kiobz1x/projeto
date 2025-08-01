@@ -3,7 +3,6 @@ package controller;
 import dao.LeitorDAO;
 import dao.UsuarioDAO;
 import exception.leitor.LeitorJaExisteException;
-import exception.leitor.LeitorNaoExisteException;
 import model.Leitor;
 
 import java.util.List;
@@ -21,16 +20,15 @@ public class LeitorController {
     public void cadastrarLeitor(Leitor leitor) throws LeitorJaExisteException {
         // Gera matrícula automaticamente
         String novaMatricula = gerarMatriculaLeitor();
-        leitor.setMatricula(novaMatricula);
+        //leitor.setMatricula(novaMatricula);
 
         // Verifica se já existe no LeitorDAO ou no UsuarioDAO
-        boolean jaExisteComoLeitor = leitorDAO.buscarPorMatricula(novaMatricula) != null;
-        boolean jaExisteComoUsuario = usuarioDAO.buscarPorMatricula(novaMatricula) != null;
 
-        if (jaExisteComoLeitor || jaExisteComoUsuario) {
+        if (leitorDAO.buscarPorMatricula(novaMatricula) != null || usuarioDAO.buscarPorMatricula(novaMatricula) != null) {
             throw new LeitorJaExisteException();
         }
 
+        leitor.setMatricula(novaMatricula);
         leitorDAO.adicionar(leitor);
         System.out.println("✅ Leitor cadastrado com sucesso. Matrícula: " + novaMatricula);
     }
@@ -42,9 +40,33 @@ public class LeitorController {
     public Leitor buscarLeitorPorMatricula(String matricula) {
         return leitorDAO.buscarPorMatricula(matricula);
     }
+    
+    public boolean atualizarLeitor(String matricula, String nome ,String telefone, String email){
+    	Leitor leitorExiste = leitorDAO.buscarPorMatricula(matricula);
+    	
+    	if(leitorExiste != null) {
+    		leitorExiste.setNome(nome);
+    		leitorExiste.setTelefone(telefone);
+    		leitorExiste.setEmail(email);
+    		leitorDAO.atualizarLeitor(leitorExiste);
+    		System.out.println("✅ Leitor atualizado");
+    		return true;
+    	}else {
+    		System.out.println("❌ Leitor não encontrado");
+    		return false;
+    	}
+    		
+    }
 
     public boolean removerLeitor(String matricula) {
-        return leitorDAO.remover(matricula);
+    	boolean remover = leitorDAO.remover(matricula);
+    	if(remover) {
+    		System.out.println("✅ Leitor excluido");
+    	}else {
+    		System.out.println("❌ Leitor não encontrado");
+    	}
+    	
+    	return remover;
     }
 
     // 🔧 Método que gera matrícula no padrão LEI-00001
