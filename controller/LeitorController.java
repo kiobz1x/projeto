@@ -2,7 +2,8 @@ package controller;
 
 import dao.LeitorDAO;
 import dao.UsuarioDAO;
-import exception.LeitorJaExisteException;
+import exception.leitor.LeitorJaExisteException;
+import exception.leitor.LeitorNaoExisteException;
 import model.Leitor;
 
 import java.util.List;
