@@ -1,7 +1,6 @@
 package view;
 
 import model.Usuario;
-import model.TipoUsuario;
 
 import javax.swing.*;
 import java.awt.*;
