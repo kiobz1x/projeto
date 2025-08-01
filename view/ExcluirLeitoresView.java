@@ -1,16 +1,11 @@
 package view;
 
-import controller.LeitorController;
-import model.Leitor;
-import model.TipoLeitor;
-
 import javax.swing.*;
 import java.awt.*;
 
 public class ExcluirLeitoresView extends JFrame {
     private final JTextField campoMatricula;
     private final JLabel mensagem;
-    private JTextField textField;
 
     public ExcluirLeitoresView() {
         setResizable(false);
@@ -30,10 +25,15 @@ public class ExcluirLeitoresView extends JFrame {
         r.setBounds(287, 51, 212, 24);
         painelLeitor.add(r);
 
-        JLabel excluirLeitores = new JLabel("Digite a matricula do leitor:");
+        JLabel excluirLeitor = new JLabel("Digite a matricula do leitor");
+        excluirLeitor.setFont(new Font("Verdana", Font.PLAIN, 14));
+        excluirLeitor.setBounds(178, 151, 203, 32);
+        painelLeitor.add(excluirLeitor);
         campoMatricula = new JTextField();
+        campoMatricula.setFont(new Font("Verdana", Font.PLAIN, 14));
+        campoMatricula.setBounds(416, 154, 178, 29);
         painelLeitor.add(campoMatricula);
-        
+        campoMatricula.setColumns(10);
 
         mensagem = new JLabel("", SwingConstants.CENTER);
         getContentPane().add(mensagem, BorderLayout.NORTH);
@@ -43,24 +43,20 @@ public class ExcluirLeitoresView extends JFrame {
         botaoExcluir.setFont(new Font("Verdana", Font.PLAIN, 16));
         botaoExcluir.setBounds(248, 253, 263, 21);
         painelLeitor.add(botaoExcluir);
-        
-        textField = new JTextField();
-        textField.setFont(new Font("Verdana", Font.PLAIN, 14));
-        textField.setBounds(416, 154, 178, 29);
-        painelLeitor.add(textField);
-        textField.setColumns(10);
-        
-        JLabel lblNewLabel = new JLabel("Digite a matricula do leitor");
-        lblNewLabel.setFont(new Font("Verdana", Font.PLAIN, 14));
-        lblNewLabel.setBounds(178, 151, 203, 32);
-        painelLeitor.add(lblNewLabel);
         botaoExcluir.addActionListener(e -> excluirLeitor());
 
         setVisible(true);
     }
 
     private void excluirLeitor() {
-    	String matricula = campoMatricula.getText().trim();
+    	String excluirLeitor = campoMatricula.getText().trim();
+    	
+    	if (excluirLeitor.isEmpty()) {
+            mensagem.setText("⚠ Preencha todos os campos.");
+            return;
+        }
+    	
+    	mensagem.setText("✅ Usuário excluido com sucesso");
     	limparCampos();
     }
 
