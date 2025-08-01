@@ -1,7 +1,7 @@
 package view;
 
 import controller.UsuarioController;
-import exception.UsuarioJaExisteException;
+import exception.usuario.UsuarioJaExisteException;
 import model.TipoUsuario;
 import model.Usuario;
 
