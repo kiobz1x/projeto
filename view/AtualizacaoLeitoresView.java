@@ -13,9 +13,6 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import controller.LeitorController;
-import model.Leitor;
-import model.TipoLeitor;
-import exception.leitor.LeitorNaoExisteException;
 
 public class AtualizacaoLeitoresView extends JFrame{
 	private final JTextField campoNome;
@@ -133,15 +130,15 @@ public class AtualizacaoLeitoresView extends JFrame{
         }
 
         try {
-            TipoLeitor tipo = TipoLeitor.valueOf(tipoStr);
-            Leitor leitor = new Leitor(nomeNovo, tipo, telefoneNovo, emailNovo); // matrícula automática
             LeitorController controller = new LeitorController();
-            controller.atualizarLeitor(nomeNovo, tipo ,telefoneNovo, emailNovo);
-            mensagem.setText("✅ Leitor atualizado com sucesso! Matrícula: " + leitor.getMatricula());
-            limparCampos();
-        } catch (IllegalArgumentException e) {
-            mensagem.setText("❌ Tipo de leitor inválido.");
-        } catch (Exception e) {
+            boolean leitorAtualizado = controller.atualizarLeitor(matricula, nomeNovo, telefoneNovo, emailNovo); //matrícula automática
+            if(leitorAtualizado) {
+            	mensagem.setText("✅ Leitor atualizado com sucesso! Matrícula: " + matricula);
+                limparCampos();
+            }else {
+            	mensagem.setText("❌ Leitor não encontrado.");
+            }
+        }  catch (Exception e) {
             mensagem.setText("❌ Erro inesperado ao cadastrar.");
             e.printStackTrace();
         }
