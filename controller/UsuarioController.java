@@ -2,7 +2,7 @@ package controller;
 
 import dao.LeitorDAO;
 import dao.UsuarioDAO;
-import exception.UsuarioJaExisteException;
+import exception.usuario.UsuarioJaExisteException;
 import model.Usuario;
 
 import java.util.List;
