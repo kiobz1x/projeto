@@ -13,8 +13,6 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import controller.UsuarioController;
-import model.TipoUsuario;
-import model.Usuario;
 
 public class AtualizarUsuarioView extends JFrame{
 	private final JTextField campoNome;
@@ -94,11 +92,11 @@ public class AtualizarUsuarioView extends JFrame{
         getContentPane().add(mensagem, BorderLayout.NORTH);
         getContentPane().add(painelLeitor, BorderLayout.CENTER);
 
-        JButton botaoCadastrar = new JButton("Atualizar Leitor");
-        botaoCadastrar.setFont(new Font("Verdana", Font.PLAIN, 16));
-        botaoCadastrar.setBounds(275, 386, 263, 21);
-        painelLeitor.add(botaoCadastrar);
-        botaoCadastrar.addActionListener(e -> atualizarUsuario());
+        JButton botaoAtualizar = new JButton("Atualizar Usuario");
+        botaoAtualizar.setFont(new Font("Verdana", Font.PLAIN, 16));
+        botaoAtualizar.setBounds(275, 386, 263, 21);
+        painelLeitor.add(botaoAtualizar);
+        botaoAtualizar.addActionListener(e -> atualizarUsuario());
 
         setVisible(true);
     }
@@ -132,14 +130,14 @@ public class AtualizarUsuarioView extends JFrame{
         }
 
         try {
-            TipoUsuario tipo = TipoUsuario.valueOf(tipoStr);
-            Usuario usuario = new Usuario(nomeNovo, tipo, telefoneNovo, emailNovo); // matrícula automática
             UsuarioController controller = new UsuarioController();
-            controller.editarUsuario(nomeNovo, tipo ,telefoneNovo, emailNovo);
-            mensagem.setText("✅ Usuario atualizado com sucesso!");
-            limparCampos();
-        } catch (IllegalArgumentException e) {
-            mensagem.setText("❌ Tipo de usuario inválido.");
+            boolean editarUsuario = controller.editarUsuario(matricula, nomeNovo, telefoneNovo, emailNovo); // matrícula automática
+            if(editarUsuario) {
+                mensagem.setText("✅ Usuario atualizado com sucesso!");
+                limparCampos();
+            }else {
+            	System.out.println("❌ Usuário não encotrado.");
+            }
         } catch (Exception e) {
             mensagem.setText("❌ Erro inesperado ao cadastrar.");
             e.printStackTrace();
