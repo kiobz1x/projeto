@@ -35,10 +35,26 @@ public class MenuView extends JFrame {
                 JButton botaoCadastrarUsuario = new JButton("Cadastrar Usuários");
                 botaoCadastrarUsuario.addActionListener(e -> new CadastroUsuarioView());
                 painelBotoes.add(botaoCadastrarUsuario);
+                
+                JButton botaoAtualizarUsuario = new JButton("Atualizar Usuários");
+                botaoAtualizarUsuario.addActionListener(e -> new AtualizarUsuarioView());
+                painelBotoes.add(botaoAtualizarUsuario);
+                
+                JButton botaoExcluirUsuario = new JButton("Excluir Usuários");
+                botaoExcluirUsuario.addActionListener(e -> new ExcluirUsuarioView());
+                painelBotoes.add(botaoExcluirUsuario);
 
                 JButton botaoCadastrarLeitor = new JButton("Cadastrar Leitores");
                 botaoCadastrarLeitor.addActionListener(e -> new CadastroLeitoresView());
                 painelBotoes.add(botaoCadastrarLeitor);
+                
+                JButton botaoAtualizarLeitor = new JButton("Atualizar Leitores");
+                botaoAtualizarLeitor.addActionListener(e -> new AtualizacaoLeitoresView());
+                painelBotoes.add(botaoAtualizarLeitor);
+                
+                JButton botaoExcluirLeitor = new JButton("Excluir Leitores");
+                botaoExcluirLeitor.addActionListener(e -> new ExcluirLeitoresView());
+                painelBotoes.add(botaoExcluirLeitor);
 
             }
 
