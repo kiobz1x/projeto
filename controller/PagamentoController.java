@@ -4,7 +4,6 @@ import dao.PagamentoDAO;
 import model.Leitor;
 import model.MetodoPagamento;
 import model.PagamentoMulta;
-import model.Usuario;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -24,7 +23,7 @@ public class PagamentoController {
         pagamentos.add(pagamento);
         dao.salvar(pagamentos);
 
-        System.out.println("💰 Pagamento registrado com sucesso:");
+        System.out.println("Pagamento registrado com sucesso:");
         System.out.println(pagamento);
     }
 
