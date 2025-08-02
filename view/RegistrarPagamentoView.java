@@ -8,6 +8,7 @@ import model.MetodoPagamento;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.List;
 
 public class RegistrarPagamentoView extends JFrame {
     private final JTextField campoMatricula;
@@ -17,7 +18,7 @@ public class RegistrarPagamentoView extends JFrame {
 
     public RegistrarPagamentoView() {
         setResizable(false);
-        setTitle("💳 Registrar Pagamento de Multa");
+        setTitle("Registrar Pagamento de Multa");
         setSize(601, 300);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -64,14 +65,14 @@ public class RegistrarPagamentoView extends JFrame {
         String metodoStr = (String) comboMetodo.getSelectedItem();
 
         if (matriculaLeitor.isEmpty() || metodoStr.equals(" ")) {
-            mensagem.setText("⚠ Preencha todos os campos.");
+            mensagem.setText("Preencha todos os campos.");
             return;
         }
 
         LeitorController leitorController = new LeitorController();
         Leitor leitor = leitorController.buscarLeitorPorMatricula(matriculaLeitor);
         if (leitor == null) {
-            mensagem.setText("❌ Leitor não encontrado.");
+            mensagem.setText("Leitor não encontrado.");
             return;
         }
 
@@ -79,12 +80,12 @@ public class RegistrarPagamentoView extends JFrame {
         try {
             metodo = MetodoPagamento.valueOf(metodoStr);
         } catch (IllegalArgumentException e) {
-            mensagem.setText("❌ Método de pagamento inválido.");
+            mensagem.setText("Método de pagamento inválido.");
             return;
         }
 
         MultaController multaController = new MultaController();
-        java.util.List<Multa> multasPendentes = multaController.listarMultasPendentes();
+        List<Multa> multasPendentes = multaController.listarMultasPendentes();
 
         boolean pagouAlguma = false;
         for (Multa multa : multasPendentes) {
@@ -97,10 +98,10 @@ public class RegistrarPagamentoView extends JFrame {
         }
 
         if (pagouAlguma) {
-            mensagem.setText("✅ Multa(s) paga(s) com sucesso!");
+            mensagem.setText("Multa(s) paga(s) com sucesso!");
             limparCampos();
         } else {
-            mensagem.setText("⚠ Nenhuma multa pendente encontrada para este leitor.");
+            mensagem.setText("Nenhuma multa pendente encontrada para este leitor.");
         }
     }
 
