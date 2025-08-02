@@ -24,7 +24,7 @@ public class RelatorioController {
     private final EmprestimoDAO dao = new EmprestimoDAO();
     private final LeitorDAO leitorDAO = new LeitorDAO();
 
-    // 📄 Relatório de empréstimos do mês atual
+    // relatório de empréstimos do mês atual
     public void gerarRelatorioEmprestimosDoMes() {
         List<Emprestimo> todos = dao.carregar();
         int mesAtual = LocalDate.now().getMonthValue();
@@ -33,7 +33,7 @@ public class RelatorioController {
         List<Emprestimo> filtrados = todos.stream().filter(e -> e.getDataEmprestimo().getMonthValue() == mesAtual && e.getDataEmprestimo().getYear() == anoAtual).collect(Collectors.toList());
 
         if (filtrados.isEmpty()) {
-            System.out.println("📭 Nenhum empréstimo registrado este mês.");
+            System.out.println("Nenhum empréstimo registrado este mês.");
             return;
         }
 
@@ -44,7 +44,7 @@ public class RelatorioController {
             PdfWriter.getInstance(doc, new FileOutputStream(nomeArquivo));
             doc.open();
 
-            doc.add(new Paragraph("📄 Relatório de Empréstimos - " + mesAtual + "/" + anoAtual,
+            doc.add(new Paragraph("Relatório de Empréstimos - " + mesAtual + "/" + anoAtual,
                     FontFactory.getFont(FontFactory.HELVETICA_BOLD, 16)));
             doc.add(new Paragraph(" "));
 
@@ -67,30 +67,30 @@ public class RelatorioController {
             doc.add(tabela);
             doc.close();
 
-            System.out.println("✅ Relatório gerado: " + nomeArquivo);
+            System.out.println("Relatório gerado: " + nomeArquivo);
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("❌ Erro ao gerar relatório.");
+            System.out.println("Erro ao gerar relatório.");
         }
     }
 
-    // 📄 Relatório de obras mais emprestadas
+    // relatório das obras mais emprestadas
     public void gerarRelatorioObrasMaisEmprestadas() {
         List<Emprestimo> emprestimos = dao.carregar();
 
         if (emprestimos.isEmpty()) {
-            System.out.println("📭 Nenhum empréstimo encontrado.");
+            System.out.println("Nenhum empréstimo encontrado.");
             return;
         }
 
-        // Contar empréstimos por título
+        // contador de empréstimos por título
         Map<String, Integer> contagem = new HashMap<>();
         for (Emprestimo e : emprestimos) {
             String titulo = e.getObra().getTitulo();
             contagem.put(titulo, contagem.getOrDefault(titulo, 0) + 1);
         }
 
-        // Ordenar do mais emprestado ao menos
+        // ordenar do mais emprestado ao menos
         List<Map.Entry<String, Integer>> ordenado = new ArrayList<>(contagem.entrySet());
         ordenado.sort(Map.Entry.comparingByValue(Comparator.reverseOrder()));
 
@@ -101,7 +101,7 @@ public class RelatorioController {
             PdfWriter.getInstance(doc, new FileOutputStream(nomeArquivo));
             doc.open();
 
-            doc.add(new Paragraph("📚 Obras Mais Emprestadas",
+            doc.add(new Paragraph("Obras Mais Emprestadas",
                     FontFactory.getFont(FontFactory.HELVETICA_BOLD, 16)));
             doc.add(new Paragraph(" ")); // espaço
 
@@ -117,16 +117,16 @@ public class RelatorioController {
             doc.add(tabela);
             doc.close();
 
-            System.out.println("✅ Relatório gerado: " + nomeArquivo);
+            System.out.println("Relatório gerado: " + nomeArquivo);
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("❌ Erro ao gerar relatório.");
+            System.out.println("Erro ao gerar relatório.");
         }
     }
     public void gerarRelatorioUsuariosComMaisAtrasos() {
         List<Emprestimo> emprestimos = dao.carregar();
 
-        // Mapa para contar atrasos por usuário
+        // mapa para contar atrasos por usuário
         Map<String, Integer> contagemAtrasos = new HashMap<>();
 
         for (Emprestimo e : emprestimos) {
@@ -142,7 +142,7 @@ public class RelatorioController {
             return;
         }
 
-        // Ordenar do maior número de atrasos ao menor
+        // ordenar do maior número de atrasos ao menor
         List<Map.Entry<String, Integer>> ordenado = new ArrayList<>(contagemAtrasos.entrySet());
         ordenado.sort(Map.Entry.comparingByValue(Comparator.reverseOrder()));
 
@@ -169,10 +169,10 @@ public class RelatorioController {
             doc.add(tabela);
             doc.close();
 
-            System.out.println("✅ Relatório gerado: " + nomeArquivo);
+            System.out.println("Relatório gerado: " + nomeArquivo);
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("❌ Erro ao gerar relatório.");
+            System.out.println("Erro ao gerar relatório.");
         }
     }
 
