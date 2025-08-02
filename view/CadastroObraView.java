@@ -4,7 +4,6 @@ import javax.swing.*;
 import java.awt.*;
 import controller.ObraController;
 
-
 public class CadastroObraView extends JFrame {
     private final JTextField campoCodigo;
     private final JTextField campoTitulo;
@@ -15,7 +14,7 @@ public class CadastroObraView extends JFrame {
 
     public CadastroObraView() {
     	setResizable(false);
-        setTitle("📘 Cadastro de Obra");
+        setTitle("Cadastro de Obra");
         setSize(615, 485);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE); // Fecha só esta janela
         setLocationRelativeTo(null);
@@ -102,7 +101,7 @@ public class CadastroObraView extends JFrame {
         String tipo = (String) comboTipo.getSelectedItem();
 
         if (codigo.isEmpty() || titulo.isEmpty() || autor.isEmpty() || anoTexto.isEmpty()) {
-            mensagem.setText("⚠ Preencha todos os campos.");
+            mensagem.setText("Preencha todos os campos.");
             return;
         }
 
@@ -111,7 +110,7 @@ public class CadastroObraView extends JFrame {
             int anoAtual = java.time.Year.now().getValue();
 
             if (ano > anoAtual) {
-                mensagem.setText("⚠ O ano de publicação não pode ser maior que o ano atual.");
+                mensagem.setText("O ano de publicação não pode ser maior que o ano atual.");
                 return;
             }
 
@@ -119,14 +118,14 @@ public class CadastroObraView extends JFrame {
             boolean sucesso = controller.adicionarObra(codigo, titulo, autor, ano, tipo);
 
             if (sucesso) {
-                mensagem.setText("✅ Obra cadastrada com sucesso!");
+                mensagem.setText("Obra cadastrada com sucesso!");
                 limparCampos();
             } else {
-                mensagem.setText("❌ Erro: código já existe ou tipo inválido.");
+                mensagem.setText("Erro: código já existe ou tipo inválido.");
             }
 
         } catch (NumberFormatException e) {
-            mensagem.setText("❌ Ano inválido. Use apenas números.");
+            mensagem.setText("Ano inválido. Use apenas números.");
         }
     }
 
