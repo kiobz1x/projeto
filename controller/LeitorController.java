@@ -18,11 +18,8 @@ public class LeitorController {
     }
 
     public void cadastrarLeitor(Leitor leitor) throws LeitorJaExisteException {
-        // Gera matrícula automaticamente
         String novaMatricula = gerarMatriculaLeitor();
-        //leitor.setMatricula(novaMatricula);
-
-        // Verifica se já existe no LeitorDAO ou no UsuarioDAO
+        leitor.setMatricula(novaMatricula);
 
         if (leitorDAO.buscarPorMatricula(novaMatricula) != null || usuarioDAO.buscarPorMatricula(novaMatricula) != null) {
             throw new LeitorJaExisteException();
@@ -30,7 +27,7 @@ public class LeitorController {
 
         leitor.setMatricula(novaMatricula);
         leitorDAO.adicionar(leitor);
-        System.out.println("✅ Leitor cadastrado com sucesso. Matrícula: " + novaMatricula);
+        System.out.println("Leitor cadastrado com sucesso. Matrícula: " + novaMatricula);
     }
 
     public List<Leitor> listarLeitores() {
@@ -49,10 +46,10 @@ public class LeitorController {
     		leitorExiste.setTelefone(telefone);
     		leitorExiste.setEmail(email);
     		leitorDAO.atualizarLeitor(leitorExiste);
-    		System.out.println("✅ Leitor atualizado");
+    		System.out.println("Leitor atualizado");
     		return true;
     	}else {
-    		System.out.println("❌ Leitor não encontrado");
+    		System.out.println("Leitor não encontrado");
     		return false;
     	}
     		
@@ -61,15 +58,15 @@ public class LeitorController {
     public boolean removerLeitor(String matricula) {
     	boolean remover = leitorDAO.remover(matricula);
     	if(remover) {
-    		System.out.println("✅ Leitor excluido");
+    		System.out.println("Leitor excluido");
     	}else {
-    		System.out.println("❌ Leitor não encontrado");
+    		System.out.println("Leitor não encontrado");
     	}
     	
     	return remover;
     }
 
-    // 🔧 Método que gera matrícula no padrão LEI-00001
+    // Método que gera matrícula no padrão LEI-00001
     private String gerarMatriculaLeitor() {
         int maiorNumero = 0;
         for (Leitor l : leitorDAO.listar()) {
