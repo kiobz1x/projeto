@@ -66,7 +66,7 @@ public class ObraController {
 
     public void exibirLista(List<Obra> lista) {
         if (lista.isEmpty()) {
-            System.out.println("📭 Nenhuma obra encontrada.");
+            System.out.println("Nenhuma obra encontrada.");
         } else {
             for (Obra o : lista) {
                 System.out.println(o);
