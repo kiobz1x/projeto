@@ -24,15 +24,15 @@ public class RelatorioView extends JFrame {
         JPanel painel = new JPanel(new GridLayout(4, 1, 10, 10));
         painel.setBorder(BorderFactory.createEmptyBorder(20, 50, 20, 50));
 
-        JButton botaoEmprestimosMes = new JButton("📆 Empréstimos do Mês");
+        JButton botaoEmprestimosMes = new JButton("Empréstimos do Mês");
         botaoEmprestimosMes.addActionListener(e -> controller.gerarRelatorioEmprestimosDoMes());
         painel.add(botaoEmprestimosMes);
 
-        JButton botaoMaisEmprestadas = new JButton("📚 Obras Mais Emprestadas");
+        JButton botaoMaisEmprestadas = new JButton("Obras Mais Emprestadas");
         botaoMaisEmprestadas.addActionListener(e -> controller.gerarRelatorioObrasMaisEmprestadas());
         painel.add(botaoMaisEmprestadas);
 
-        JButton botaoAtrasos = new JButton("⏰ Usuários com Mais Atrasos");
+        JButton botaoAtrasos = new JButton("Usuários com Mais Atrasos");
         botaoAtrasos.addActionListener(e -> controller.gerarRelatorioUsuariosComMaisAtrasos());
         painel.add(botaoAtrasos);
 
