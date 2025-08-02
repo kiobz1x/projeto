@@ -24,7 +24,7 @@ public class AtualizarUsuarioView extends JFrame{
 
     public AtualizarUsuarioView() {
         setResizable(false);
-        setTitle("👤 Atualização de dados dos Usuários");
+        setTitle("Atualização de dados dos Usuários");
         setSize(797, 532);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -110,22 +110,22 @@ public class AtualizarUsuarioView extends JFrame{
 
         // Validações básicas
         if (nomeNovo.isEmpty() || matricula.isEmpty() ||telefoneNovo.isEmpty() || emailNovo.isEmpty() || tipoStr == null || tipoStr.isBlank()) {
-            mensagem.setText("⚠ Preencha todos os campos.");
+            mensagem.setText("Preencha todos os campos.");
             return;
 		}
 
         if (!telefoneNovo.matches("\\d+")) {
-            mensagem.setText("⚠ O telefone deve conter apenas números.");
+            mensagem.setText("O telefone deve conter apenas números.");
             return;
         }
 
         if (!emailNovo.matches("^[\\w\\.-]+@[\\w\\.-]+\\.\\w{2,}$")) {
-            mensagem.setText("⚠ E-mail inválido. Ex: exemplo@dominio.com");
+            mensagem.setText("E-mail inválido. Ex: exemplo@dominio.com");
             return;
         }
 
         if (!nomeNovo.matches("^[A-Za-zÀ-ÿ ]+$")) {
-            mensagem.setText("⚠ O nome deve conter apenas letras.");
+            mensagem.setText("O nome deve conter apenas letras.");
             return;
         }
 
@@ -133,13 +133,13 @@ public class AtualizarUsuarioView extends JFrame{
             UsuarioController controller = new UsuarioController();
             boolean editarUsuario = controller.editarUsuario(matricula, nomeNovo, telefoneNovo, emailNovo); // matrícula automática
             if(editarUsuario) {
-                mensagem.setText("✅ Usuario atualizado com sucesso!");
+                mensagem.setText("Usuario atualizado com sucesso!");
                 limparCampos();
             }else {
-            	System.out.println("❌ Usuário não encotrado.");
+            	mensagem.setText("Usuário não encotrado.");
             }
         } catch (Exception e) {
-            mensagem.setText("❌ Erro inesperado ao cadastrar.");
+            mensagem.setText("Erro inesperado ao cadastrar.");
             e.printStackTrace();
         }
     }
