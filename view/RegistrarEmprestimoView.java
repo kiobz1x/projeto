@@ -4,8 +4,6 @@ import controller.EmprestimoController;
 import controller.LeitorController;
 import controller.ObraController;
 import exception.emprestimo.EmprestimoJaRealizadoException;
-//import exception.obras.ObraNaoDisponivelException;
-//import exception.obras.ObraNaoEncontradaException;
 import model.Leitor;
 import model.Obra;
 
@@ -19,7 +17,7 @@ public class RegistrarEmprestimoView extends JFrame {
 
     public RegistrarEmprestimoView() {
         setResizable(false);
-        setTitle("📥 Registrar Empréstimo");
+        setTitle("Registrar Empréstimo");
         setSize(400, 250);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -48,7 +46,6 @@ public class RegistrarEmprestimoView extends JFrame {
 			try {
 				registrarEmprestimo();
 			} catch (EmprestimoJaRealizadoException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		});
@@ -66,7 +63,7 @@ public class RegistrarEmprestimoView extends JFrame {
         String codigoObra = campoCodigoObra.getText().trim();
 
         if (matricula.isEmpty() || codigoObra.isEmpty()) {
-            mensagem.setText("⚠ Preencha todos os campos.");
+            mensagem.setText("Preencha todos os campos.");
             return;
         }
 
@@ -76,13 +73,13 @@ public class RegistrarEmprestimoView extends JFrame {
 
         Leitor leitor = leitorController.buscarLeitorPorMatricula(matricula);
         if (leitor == null) {
-            mensagem.setText("❌ Leitor não encontrado.");
+            mensagem.setText("Leitor não encontrado.");
             return;
         }
 
         Obra obra = obraController.buscarPorCodigo(codigoObra);
         if (obra == null) {
-            mensagem.setText("❌ Obra não encontrada.");
+            mensagem.setText("Obra não encontrada.");
             return;
         }
 
@@ -90,13 +87,13 @@ public class RegistrarEmprestimoView extends JFrame {
             boolean sucesso = emprestimoController.realizarEmprestimo(leitor.getMatricula(), obra.getCodigo());
 
             if (sucesso) {
-                mensagem.setText("✅ Empréstimo registrado com sucesso!");
+                mensagem.setText("Empréstimo registrado com sucesso!");
                 limparCampos();
             } else {
-                mensagem.setText("❌ Falha ao registrar o empréstimo.");
+                mensagem.setText("Falha ao registrar o empréstimo.");
             }
         } catch (EmprestimoJaRealizadoException e) { //antes tava ObraNaoEncontradaException | ObraNaoDisponivelException e, mudei para EmprestimoJaRealizadoException e
-            mensagem.setText("❌ " + e.getMessage());
+            mensagem.setText("X " + e.getMessage());
         }
     }
 
