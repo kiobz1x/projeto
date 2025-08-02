@@ -99,11 +99,11 @@ public class ObraController {
         return true;
     }
     public void salvarLista() {
-        dao.salvar(obras); // Salva a lista atual de obras com os novos estados (emprestado ou não)
+        dao.salvar(obras); // salva a lista atual com os novos estados (emprestado ou não)
     }
 
 
-    // ✅ Método para fornecer a lista completa de obras (cópia)
+    // método para fornecer a lista completa de obras (cópia)
     public List<Obra> getObras() {
         return new ArrayList<>(obras);
     }
