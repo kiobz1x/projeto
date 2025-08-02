@@ -108,7 +108,6 @@ public class AtualizarUsuarioView extends JFrame{
         String emailNovo = campoEmail.getText().trim();
         String tipoStr = (String) comboTipoLeitor.getSelectedItem();
 
-        // Validações básicas
         if (nomeNovo.isEmpty() || matricula.isEmpty() ||telefoneNovo.isEmpty() || emailNovo.isEmpty() || tipoStr == null || tipoStr.isBlank()) {
             mensagem.setText("Preencha todos os campos.");
             return;
