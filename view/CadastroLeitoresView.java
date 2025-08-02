@@ -17,7 +17,7 @@ public class CadastroLeitoresView extends JFrame {
 
     public CadastroLeitoresView() {
         setResizable(false);
-        setTitle("👤 Cadastro de Leitores");
+        setTitle("Cadastro de Leitores");
         setSize(797, 532);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -90,24 +90,23 @@ public class CadastroLeitoresView extends JFrame {
         String email = campoEmail.getText().trim();
         String tipoStr = (String) comboTipoLeitor.getSelectedItem();
 
-        // Validações básicas
         if (nome.isEmpty() || telefone.isEmpty() || email.isEmpty() || tipoStr == null || tipoStr.isBlank()) {
-            mensagem.setText("⚠ Preencha todos os campos.");
+            mensagem.setText("Preencha todos os campos.");
             return;
         }
 
         if (!telefone.matches("\\d+")) {
-            mensagem.setText("⚠ O telefone deve conter apenas números.");
+            mensagem.setText("O telefone deve conter apenas números.");
             return;
         }
 
         if (!email.matches("^[\\w\\.-]+@[\\w\\.-]+\\.\\w{2,}$")) {
-            mensagem.setText("⚠ E-mail inválido. Ex: exemplo@dominio.com");
+            mensagem.setText("E-mail inválido. Ex: exemplo@dominio.com");
             return;
         }
 
         if (!nome.matches("^[A-Za-zÀ-ÿ ]+$")) {
-            mensagem.setText("⚠ O nome deve conter apenas letras.");
+            mensagem.setText("O nome deve conter apenas letras.");
             return;
         }
 
@@ -116,14 +115,14 @@ public class CadastroLeitoresView extends JFrame {
             Leitor leitor = new Leitor(nome, tipo, telefone, email); // matrícula automática
             LeitorController controller = new LeitorController();
             controller.cadastrarLeitor(leitor);
-            mensagem.setText("✅ Leitor cadastrado com sucesso! Matrícula: " + leitor.getMatricula());
+            mensagem.setText("Leitor cadastrado com sucesso! Matrícula: " + leitor.getMatricula());
             limparCampos();
         } catch (LeitorJaExisteException e) {
-            mensagem.setText("❌ " + e.getMessage());
+            mensagem.setText("X " + e.getMessage());
         } catch (IllegalArgumentException e) {
-            mensagem.setText("❌ Tipo de leitor inválido.");
+            mensagem.setText(" Tipo de leitor inválido.");
         } catch (Exception e) {
-            mensagem.setText("❌ Erro inesperado ao cadastrar.");
+            mensagem.setText(" Erro inesperado ao cadastrar.");
             e.printStackTrace();
         }
     }
