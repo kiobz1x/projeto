@@ -15,17 +15,17 @@ public class LoginController {
     }
 
     public Usuario fazerLogin(Scanner scanner) {
-        System.out.print("🔐 Digite a matrícula: ");
+        System.out.print("Digite a matrícula: ");
         String matricula = scanner.nextLine();
 
         for (Usuario u : usuarios) {
             if (u.getMatricula().equals(matricula)) {
-                System.out.println("✅ Login bem-sucedido como " + u.getTipo());
+                System.out.println("Login bem-sucedido como " + u.getTipo());
                 return u;
             }
         }
 
-        System.out.println("❌ Usuário não encontrado.");
+        System.out.println("Usuário não encontrado.");
         return null;
     }
     public Usuario buscarPorMatricula(String matricula) {
