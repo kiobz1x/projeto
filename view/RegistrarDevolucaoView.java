@@ -3,7 +3,6 @@ package view;
 import controller.EmprestimoController;
 import exception.emprestimo.DevolucaoInvalidaException;
 import model.Emprestimo;
-import model.Obra;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,13 +12,12 @@ public class RegistrarDevolucaoView extends JFrame {
     private final JLabel mensagem;
 
     public RegistrarDevolucaoView() {
-        setTitle("📤 Registrar Devolução");
+        setTitle("Registrar Devolução");
         setSize(350, 200);
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE); // Fecha só essa janela
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
 
-        // Painel principal
         JPanel painel = new JPanel(new GridLayout(3, 1, 10, 10));
         painel.setBorder(BorderFactory.createEmptyBorder(20, 40, 20, 40));
 
@@ -32,13 +30,11 @@ public class RegistrarDevolucaoView extends JFrame {
 			try {
 				registrarDevolucao();
 			} catch (DevolucaoInvalidaException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		});
         painel.add(botaoRegistrar);
 
-        // Mensagem
         mensagem = new JLabel("", SwingConstants.CENTER);
         add(mensagem, BorderLayout.NORTH);
         add(painel, BorderLayout.CENTER);
@@ -50,7 +46,7 @@ public class RegistrarDevolucaoView extends JFrame {
         String codigo = campoCodigo.getText().trim();
 
         if (codigo.isEmpty()) {
-            mensagem.setText("⚠ Informe o código da obra.");
+            mensagem.setText("Informe o código da obra.");
             return;
         }
 
@@ -58,7 +54,7 @@ public class RegistrarDevolucaoView extends JFrame {
         Emprestimo emprestimo = emprestimoController.encontrarEmprestimoAtivoPorObra(codigo);
 
         if (emprestimo == null) {
-            mensagem.setText("❌ Nenhum empréstimo ativo encontrado para esta obra.");
+            mensagem.setText("Nenhum empréstimo ativo encontrado para esta obra.");
             return;
         }
 
@@ -66,9 +62,9 @@ public class RegistrarDevolucaoView extends JFrame {
         boolean sucesso = emprestimoController.realizarDevolucao(codigoObra);
 
         if (sucesso) {
-            mensagem.setText("✅ Devolução registrada com sucesso.");
+            mensagem.setText("Devolução registrada com sucesso.");
         } else {
-            mensagem.setText("❌ Não foi possível registrar a devolução.");
+            mensagem.setText("Não foi possível registrar a devolução.");
         }
     }
 }
