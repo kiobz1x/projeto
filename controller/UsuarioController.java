@@ -9,7 +9,7 @@ import java.util.List;
 
 public class UsuarioController {
     private final UsuarioDAO dao;
-    private final LeitorDAO leitorDAO; // para evitar conflito com leitores
+    private final LeitorDAO leitorDAO; // Evitar conflito com os leitores
     private List<Usuario> usuarios;
 
     public UsuarioController() {
@@ -19,11 +19,9 @@ public class UsuarioController {
     }
 
     public void adicionarUsuario(Usuario novo) throws UsuarioJaExisteException {
-        // Gera matrícula automaticamente
         String novaMatricula = gerarMatriculaUsuario();
         novo.setMatricula(novaMatricula);
 
-        // Verifica se matrícula já existe em usuários ou leitores
         boolean jaExisteComoUsuario = buscarPorMatricula(novaMatricula) != null;
         boolean jaExisteComoLeitor = leitorDAO.buscarPorMatricula(novaMatricula) != null;
 
@@ -34,7 +32,7 @@ public class UsuarioController {
         List<Usuario> usuarios = dao.carregar();
         usuarios.add(novo);
         dao.salvar(usuarios);
-        System.out.println("✅ Usuário adicionado com sucesso. Matrícula: " + novaMatricula);
+        System.out.println("Usuário adicionado com sucesso. Matrícula: " + novaMatricula);
     }
 
     public Usuario buscarPorMatricula(String matricula) {
@@ -49,11 +47,11 @@ public class UsuarioController {
                 u.setTelefone(novoTelefone);
                 u.setEmail(novoEmail);
                 dao.salvar(usuarios);
-                System.out.println("✅ Usuário atualizado com sucesso.");
+                System.out.println("Usuário atualizado com sucesso.");
                 return true;
             }
         }
-        System.out.println("❌ Usuário não encontrado.");
+        System.out.println("Usuário não encontrado.");
         return false;
     }
 
@@ -62,20 +60,20 @@ public class UsuarioController {
         boolean removerUsuario = usuarios.removeIf(u -> u.getMatricula().equalsIgnoreCase(matricula));
         if (removerUsuario) {
             dao.salvar(usuarios);
-            System.out.println("✅ Usuário removido com sucesso.");
+            System.out.println("Usuário removido com sucesso.");
             return removerUsuario;
             
         }
-        System.out.println("❌ Usuário não encontrado.");
+        System.out.println("Usuário não encontrado.");
         return false;
     }
 
     public void listarUsuarios() {
     	List<Usuario> usuarios = dao.carregar();
         if (usuarios.isEmpty()) {
-            System.out.println("📭 Nenhum usuário cadastrado.");
+            System.out.println("Nenhum usuário cadastrado.");
         } else {
-            System.out.println("📚 Lista de usuários:");
+            System.out.println("Lista de usuários:");
             for (Usuario u : usuarios) {
                 System.out.println(u);
             }
