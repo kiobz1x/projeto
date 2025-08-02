@@ -19,7 +19,7 @@ public class ExcluirUsuarioView extends JFrame{
 
     public ExcluirUsuarioView() {
         setResizable(false);
-        setTitle("👤 Excluir Usuário");
+        setTitle("Excluir Usuário");
         setSize(797, 383);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -61,7 +61,7 @@ public class ExcluirUsuarioView extends JFrame{
     	String excluirUsuario = campoMatricula.getText().trim();
     	
     	if (excluirUsuario.isEmpty()) {
-            mensagem.setText("⚠ Preencha todos os campos.");
+            mensagem.setText("Preencha todos os campos.");
             return;
         }
     	
@@ -69,10 +69,10 @@ public class ExcluirUsuarioView extends JFrame{
     	boolean removerUsuario = controller.removerUsuario(excluirUsuario);
     	
     	if(removerUsuario) {
-        	mensagem.setText("✅ Usuário excluido com sucesso");
+        	mensagem.setText("Usuário excluido com sucesso");
         	limparCampos();
     	}else {
-    		mensagem.setText("❌ Usuário não encontrado.");
+    		mensagem.setText("Usuário não encontrado.");
     	}
     }
 
