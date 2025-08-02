@@ -138,7 +138,7 @@ public class RelatorioController {
         }
 
         if (contagemAtrasos.isEmpty()) {
-            System.out.println("📭 Nenhum atraso registrado.");
+            System.out.println("Nenhum atraso registrado.");
             return;
         }
 
