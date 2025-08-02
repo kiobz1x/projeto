@@ -11,7 +11,7 @@ public class ExcluirLeitoresView extends JFrame {
 
     public ExcluirLeitoresView() {
         setResizable(false);
-        setTitle("👤 Excluir Leitores");
+        setTitle("Excluir Leitores");
         setSize(797, 383);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -54,7 +54,7 @@ public class ExcluirLeitoresView extends JFrame {
     	String excluirLeitor = campoMatricula.getText().trim();
     	
     	if (excluirLeitor.isEmpty()) {
-            mensagem.setText("⚠ Preencha todos os campos.");
+            mensagem.setText("Preencha todos os campos.");
             return;
         }
     	
@@ -62,10 +62,10 @@ public class ExcluirLeitoresView extends JFrame {
     	boolean removerLeitor = controller.removerLeitor(excluirLeitor);
     	
     	if(removerLeitor) {
-    		mensagem.setText("✅ Leitor excluido com sucesso");
+    		mensagem.setText("Leitor excluido com sucesso");
         	limparCampos();
     	}else {
-    		mensagem.setText("❌ Leitor não encontrado.");
+    		mensagem.setText("Leitor não encontrado.");
     	}
     	
     }
