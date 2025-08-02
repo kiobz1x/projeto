@@ -66,7 +66,7 @@ public class MultaController {
                     );
 
                     multas.add(multa);
-                    System.out.println("📌 Multa gerada para empréstimo ID " + e.getId() + ": R$" + valor);
+                    System.out.println("Multa gerada para empréstimo ID " + e.getId() + ": R$" + valor);
                 }
             }
         }
@@ -98,7 +98,7 @@ public class MultaController {
 
                 m.setPaga(true);
                 dao.salvar(multas);
-                System.out.println("✅ Multa paga com sucesso.");
+                System.out.println("Multa paga com sucesso.");
                 return true;
             }
         }
@@ -106,7 +106,7 @@ public class MultaController {
         throw new MultaNaoEncontradaException("Nenhuma multa encontrada para o empréstimo " + idEmprestimo + ".");
     }
 
-    // ✅ Novo método com registro completo
+    //método para registro completo
     public boolean pagarMultaComRegistro(String idEmprestimo, MetodoPagamento metodo, Leitor leitor) { 
         for (Multa m : multas) {
             if (m.getIdEmprestimo().equals(idEmprestimo) && !m.isPaga()) {
@@ -124,19 +124,19 @@ public class MultaController {
                 pagamentos.add(pagamento);
                 pagamentoDAO.salvar(pagamentos);
 
-                System.out.println("✅ Multa paga e registrada com sucesso.");
+                System.out.println("Multa paga e registrada com sucesso.");
                 return true;
             }
         }
-        System.out.println("❌ Multa não encontrada ou já paga.");
+        System.out.println("Multa não encontrada ou já paga.");
         return false;
     }
 
     public void listarTodasMultas() {
         if (multas.isEmpty()) {
-            System.out.println("📭 Nenhuma multa registrada.");
+            System.out.println("Nenhuma multa registrada.");
         } else {
-            System.out.println("📋 Lista de todas as multas:");
+            System.out.println("Lista de todas as multas:");
             for (Multa m : multas) {
                 System.out.println(m);
             }
@@ -145,9 +145,9 @@ public class MultaController {
 
     public void listarPagamentos() {
         if (pagamentos.isEmpty()) {
-            System.out.println("📭 Nenhum pagamento registrado.");
+            System.out.println("Nenhum pagamento registrado.");
         } else {
-            System.out.println("📋 Lista de pagamentos:");
+            System.out.println("Lista de pagamentos:");
             for (PagamentoMulta p : pagamentos) {
                 System.out.println(p);
             }
