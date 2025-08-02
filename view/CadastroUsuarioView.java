@@ -17,7 +17,7 @@ public class CadastroUsuarioView extends JFrame {
 
     public CadastroUsuarioView() {
         setResizable(false);
-        setTitle("👤 Cadastro de Usuário");
+        setTitle("Cadastro de Usuário");
         setSize(615, 485);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -91,22 +91,22 @@ public class CadastroUsuarioView extends JFrame {
         String tipoStr = (String) comboTipo.getSelectedItem();
 
         if (nome.isEmpty() || telefone.isEmpty() || email.isEmpty()) {
-            mensagem.setText("⚠ Preencha todos os campos.");
+            mensagem.setText("Preencha todos os campos.");
             return;
         }
 
         if (!telefone.matches("\\d+")) {
-            mensagem.setText("⚠ O telefone deve conter apenas números.");
+            mensagem.setText("O telefone deve conter apenas números.");
             return;
         }
 
         if (!email.matches("^[\\w\\.-]+@[\\w\\.-]+\\.\\w{2,}$")) {
-            mensagem.setText("⚠ E-mail inválido. Ex: exemplo@dominio.com");
+            mensagem.setText("E-mail inválido. Ex: exemplo@dominio.com");
             return;
         }
 
         if (!nome.matches("^[A-Za-zÀ-ÿ ]+$")) {
-            mensagem.setText("⚠ O nome deve conter apenas letras.");
+            mensagem.setText("O nome deve conter apenas letras.");
             return;
         }
 
@@ -116,13 +116,13 @@ public class CadastroUsuarioView extends JFrame {
             UsuarioController controller = new UsuarioController();
 
             controller.adicionarUsuario(usuario);
-            mensagem.setText("✅ Usuário cadastrado com sucesso! Matrícula: " + usuario.getMatricula());
+            mensagem.setText("Usuário cadastrado com sucesso! Matrícula: " + usuario.getMatricula());
             limparCampos();
 
         } catch (UsuarioJaExisteException e) {
             mensagem.setText(e.getMessage());
         } catch (IllegalArgumentException e) {
-            mensagem.setText("❌ Tipo de usuário inválido.");
+            mensagem.setText("Tipo de usuário inválido.");
         }
     }
 
