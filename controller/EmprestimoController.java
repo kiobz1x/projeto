@@ -31,11 +31,11 @@ public class EmprestimoController {
         Obra obra = obraDAO.buscarPorCodigo(obraCodigo);
 
         if (leitor == null) {
-            System.out.println("❌ Leitor não encontrado.");
+            System.out.println("Leitor não encontrado.");
             return false;
         }
         if (obra == null) {
-            System.out.println("❌ Obra não encontrada.");
+            System.out.println("Obra não encontrada.");
             return false;
         }
         if (!obra.isDisponivel()) {
@@ -44,7 +44,7 @@ public class EmprestimoController {
 
         boolean sucessoEmprestimo = obra.emprestar(LocalDate.now());
         if (!sucessoEmprestimo) {
-            System.out.println("❌ Erro ao emprestar a obra.");
+            System.out.println("Erro ao emprestar a obra.");
             return false;
         }
 
@@ -54,7 +54,7 @@ public class EmprestimoController {
         atualizarObraNoArquivo(obra);
         emprestimoDAO.salvar(emprestimos);
 
-        System.out.println("✅ Empréstimo realizado com sucesso!");
+        System.out.println("Empréstimo realizado com sucesso!");
         return true;
     }
 
@@ -77,9 +77,9 @@ public class EmprestimoController {
                 emprestimoDAO.salvar(emprestimos);
 
                 if (emp.getDataDevolucao().isAfter(emp.getDataPrevistaDevolucao())) {
-                    System.out.println("⚠ Devolução com atraso! Multa deve ser gerada.");
+                    System.out.println("Devolução com atraso! Multa deve ser gerada.");
                 } else {
-                    System.out.println("✅ Devolução no prazo.");
+                    System.out.println("Devolução no prazo.");
                 }
 
                 return true;
@@ -126,7 +126,7 @@ public class EmprestimoController {
         Obra obra = obraDAO.buscarPorCodigo(obraCodigo);
 
         if (leitor == null || obra == null || !obra.isDisponivel()) {
-            System.out.println("❌ Erro: Leitor ou obra inválidos ou já emprestados.");
+            System.out.println("Erro: Leitor ou obra inválidos ou já emprestados.");
             return false;
         }
 
@@ -142,7 +142,7 @@ public class EmprestimoController {
         atualizarObraNoArquivo(obra);
         emprestimoDAO.salvar(emprestimos);
 
-        System.out.println("📘 Empréstimo simulado com data: " + dataEmprestimoForcada);
+        System.out.println("Empréstimo simulado com data: " + dataEmprestimoForcada);
         return true;
     }
 
@@ -160,7 +160,7 @@ public class EmprestimoController {
                 atualizarObraNoArquivo(obra);
                 emprestimoDAO.salvar(emprestimos);
 
-                System.out.println("📦 Devolução com data simulada: " + dataDevolucaoForcada);
+                System.out.println("Devolução com data simulada: " + dataDevolucaoForcada);
                 return true;
             }
         }
@@ -168,7 +168,7 @@ public class EmprestimoController {
         throw new DevolucaoInvalidaException("Nenhum empréstimo ativo encontrado para essa obra.");
     }
 
-    // 👉 Função auxiliar para atualizar uma obra específica no JSON
+    //auxilia para atualização de uma obra específica no json
     private void atualizarObraNoArquivo(Obra obraAtualizada) {
         List<Obra> obras = obraDAO.carregar();
         for (int i = 0; i < obras.size(); i++) {
