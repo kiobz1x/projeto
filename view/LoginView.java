@@ -20,8 +20,6 @@ public class LoginView extends JFrame {
         setLocationRelativeTo(null);
         getContentPane().setLayout(new BorderLayout());
       
-
-        // Painel de entrada
         JPanel painelCentro = new JPanel();
         painelCentro.setBounds(90,155,200,50);
         painelCentro.setBorder(BorderFactory.createEmptyBorder(20, 40, 20, 40));
@@ -49,11 +47,9 @@ public class LoginView extends JFrame {
         botaoEntrar.setBounds(239, 171, 115, 20);
         painelCentro.add(botaoEntrar);
 
-        // Mensagem
         mensagem = new JLabel("", SwingConstants.CENTER);
         getContentPane().add(mensagem, BorderLayout.SOUTH);
 
-        // Ação do botão
         botaoEntrar.addActionListener(e -> fazerLogin());
 
         setVisible(true);
@@ -62,25 +58,24 @@ public class LoginView extends JFrame {
     private void fazerLogin() {
         String matricula = campoMatricula.getText().trim();
         if (matricula.isEmpty()) {
-            mensagem.setText("⚠ Matrícula obrigatória.");
+            mensagem.setText("Matrícula obrigatória.");
             return;
         }
 
         LoginController loginController = new LoginController();
-        Usuario usuario = loginController.buscarPorMatricula(matricula); // ← CORRIGIDO
+        Usuario usuario = loginController.buscarPorMatricula(matricula);
 
         if (usuario != null) {
-            mensagem.setText("✅ Bem-vindo, " + usuario.getNome());
+            mensagem.setText("Bem-vindo, " + usuario.getNome());
             dispose(); // fecha a tela de login
 
             // Redireciona com base no tipo
-            SwingUtilities.invokeLater(() -> new MenuView(usuario)); // ← MenuView precisa existir
+            SwingUtilities.invokeLater(() -> new MenuView(usuario)); // MenuView precisa existir
         } else {
-            mensagem.setText("❌ Usuário não encontrado.");
+            mensagem.setText("Usuário não encontrado.");
         }
     }
 
-    // Método main para testar
     public static void main(String[] args) {
         SwingUtilities.invokeLater(LoginView::new);
     }
